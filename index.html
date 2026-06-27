@@ -6,111 +6,176 @@
 <title>AK C75 — Programadas vs Fichadas · Junio 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700;8..60,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,700;8..60,900&display=swap" rel="stylesheet">
 <style>
+@font-face{font-family:'SmithyXT';src:url('fonts/SmithyXT-Heavy-v2.woff2') format('woff2'),url('fonts/SmithyXT-Heavy-v2.ttf') format('truetype');font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:'SmithyXT';src:url('fonts/SmithyXT-VeryHeavy-v2.woff2') format('woff2'),url('fonts/SmithyXT-VeryHeavy-v2.ttf') format('truetype');font-weight:900;font-style:normal;font-display:swap}
+@font-face{font-family:'OldPress';src:url('fonts/OldPress.woff2') format('woff2'),url('fonts/OldPress.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0D1015;--card:#161B22;--card-alt:#1E2733;
-  --text:#F4ECE4;--text-muted:#9BA8B7;--rust:#8C4434;
-  --amber:#E48C04;--gold:#FCCC04;--borgona:#C44D63;
-  --oliva:#5DB87A;--steel:#3C4C5C;
+  --night:#0D1015;--night-card:#161B22;--night-input:#1E2733;--night-border:#2D3748;
+  --night-text:#F4ECE4;--night-muted:#9BA8B7;
+  --rust:#8C4434;--rust-light:#A05840;--amber:#E48C04;--amber-light:#F0A030;
+  --gold:#FCCC04;--borgona:#B24D42;--oliva:#5C7A4D;--oliva-light:#7BA86A;
+  --steel:#3C4C5C;--cream:#F4ECE4;
+  --gradient-bar:linear-gradient(90deg,#8C4434,#E48C04);
+  --gradient-gold:linear-gradient(90deg,#E48C04,#FCCC04);
+  --gradient-divider:linear-gradient(90deg,transparent,#2D3748,transparent);
+  --shadow-card:0 2px 12px rgba(0,0,0,0.4);
+  --shadow-card-hover:0 8px 32px rgba(0,0,0,0.6);
+  --shadow-kpi:0 4px 20px rgba(228,140,4,0.12);
+  --border-card:1px solid rgba(140,68,52,0.2);
+  --border-kpi:1px solid rgba(228,140,4,0.25);
   --spring:cubic-bezier(0.34,1.56,0.64,1);
   --ease-out:cubic-bezier(0.16,1,0.3,1);
+  --font-heading:'SmithyXT','Source Serif 4',serif;
+  --font-display:'SmithyXT','Source Serif 4',serif;
+  --font-decorative:'OldPress',serif;
+  --font-accent:'Caveat',cursive;
+  --font-body:'Inter',system-ui,sans-serif;
 }
 html{font-size:16px;scroll-behavior:smooth}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);overflow:hidden;height:100dvh;width:100vw}
-h1,h2,h3,.kpi-val,.hero-num{font-family:'Source Serif 4',serif}
+body{font-family:var(--font-body);background:var(--night);color:var(--night-text);overflow:hidden;height:100dvh;width:100vw}
+
+/* Texture overlay */
+body::before{content:'';position:fixed;inset:0;opacity:0.04;pointer-events:none;z-index:9999;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  mix-blend-mode:overlay}
+
+h1,h2,h3{font-family:var(--font-heading);letter-spacing:.05em;text-transform:uppercase}
+.kpi-val,.hero-num,.kpi-number{font-family:var(--font-display);font-variant-numeric:tabular-nums}
+
 .slide{position:absolute;inset:0;display:flex;flex-direction:column;padding:2rem 2.5rem 5rem;overflow-y:auto;opacity:0;transform:translateX(60px);transition:opacity .5s var(--ease-out),transform .5s var(--ease-out);pointer-events:none;scrollbar-width:thin;scrollbar-color:var(--steel) transparent}
 .slide.active{opacity:1;transform:translateX(0);pointer-events:auto}
 .slide.exit-left{opacity:0;transform:translateX(-60px)}
-.nav{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);display:flex;gap:.6rem;z-index:100;background:var(--card);padding:.5rem 1rem;border-radius:2rem;border:1px solid var(--steel)}
+
+.nav{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);display:flex;gap:.6rem;z-index:100;background:var(--night-card);padding:.5rem 1rem;border-radius:2rem;border:var(--border-card)}
 .nav button{width:10px;height:10px;border-radius:50%;background:var(--steel);border:none;cursor:pointer;transition:all .3s var(--spring);padding:0}
 .nav button.active{background:var(--gold);transform:scale(1.3)}
 .nav button:hover{background:var(--amber)}
-.slide-num{position:fixed;top:1.2rem;right:1.5rem;font-size:.75rem;color:var(--text-muted);z-index:100;font-variant-numeric:tabular-nums}
+.slide-num{position:fixed;top:1.2rem;right:1.5rem;font-size:.75rem;color:var(--night-muted);z-index:100;font-variant-numeric:tabular-nums;font-family:var(--font-body)}
+
+/* KPI Grid */
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem}
-.kpi-card{background:var(--card);border:1px solid var(--steel);border-radius:.75rem;padding:1.2rem 1rem;display:flex;flex-direction:column;gap:.25rem;position:relative;overflow:hidden}
+.kpi-card{background:var(--night-card);border-radius:10px;padding:1.2rem 1rem;display:flex;flex-direction:column;gap:.25rem;position:relative;overflow:hidden;box-shadow:var(--shadow-card);border:var(--border-card);transition:transform .2s,box-shadow .2s}
+.kpi-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-card-hover)}
 .kpi-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;border-radius:3px 0 0 3px}
 .kpi-card.gold::before{background:var(--gold)}
 .kpi-card.amber::before{background:var(--amber)}
 .kpi-card.borgona::before{background:var(--borgona)}
 .kpi-card.oliva::before{background:var(--oliva)}
 .kpi-card.rust::before{background:var(--rust)}
-.kpi-card.warn::before{background:var(--amber)}
-.kpi-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);font-weight:600}
-.kpi-val{font-size:1.6rem;font-weight:700;color:var(--amber);line-height:1.1;font-variant-numeric:tabular-nums}
-.kpi-sub{font-size:.7rem;color:var(--borgona);font-weight:600}
-.kpi-sub.positive{color:var(--borgona)}
-.kpi-sub.negative{color:var(--oliva)}
-.section-title{font-size:1.4rem;font-weight:700;margin-bottom:1.2rem;color:var(--text)}
-.section-title span{color:var(--gold)}
-.subtitle{font-size:.85rem;color:var(--text-muted);margin-bottom:1.5rem}
-.insight-card{background:var(--card-alt);border-left:3px solid var(--amber);border-radius:.5rem;padding:.8rem 1rem;font-size:.78rem;color:var(--text-muted);line-height:1.5}
-.insight-card strong{color:var(--text)}
+.kpi-label{font-family:var(--font-body);font-size:.625rem;text-transform:uppercase;letter-spacing:.1em;color:var(--night-muted);font-weight:600}
+.kpi-val{font-size:1.6rem;font-weight:900;color:var(--amber);line-height:1.1}
+.kpi-sub{font-size:.7rem;font-weight:600}
+.kpi-sub.danger{color:var(--borgona)}
+.kpi-sub.success{color:var(--oliva-light)}
+
+/* Section titles */
+.section-title{font-family:var(--font-heading);font-size:1.375rem;font-weight:700;color:var(--amber);letter-spacing:.05em;text-transform:uppercase;border-bottom:2px solid var(--rust);padding-bottom:8px;margin-bottom:1.2rem}
+.section-title span{color:var(--cream)}
+
+/* Subtitle (Caveat accent) */
+.subtitle{font-family:var(--font-accent);font-size:.875rem;color:var(--night-muted);margin-bottom:1.5rem}
+
+/* Divider */
+.divider{height:1px;background:var(--gradient-divider);margin:12px 0}
+
+/* Ornament */
+.ornament{color:var(--amber);font-size:.625rem;letter-spacing:.3em;text-align:center;margin:.5rem 0}
+
+/* Insight cards */
+.insight-card{background:var(--night-input);border-left:3px solid var(--amber);border-radius:8px;padding:.8rem 1rem;font-size:.78rem;color:var(--night-muted);line-height:1.5}
+.insight-card strong{color:var(--cream)}
 .insight-card.danger{border-left-color:var(--borgona)}
 .insight-card.success{border-left-color:var(--oliva)}
-.chart-container{background:var(--card);border:1px solid var(--steel);border-radius:.75rem;padding:1.2rem;margin:1rem 0}
-.chart-title{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:.8rem;font-weight:600}
+
+/* Chart containers */
+.chart-container{background:var(--night-card);border:var(--border-card);border-radius:10px;padding:1.2rem;margin:1rem 0;box-shadow:var(--shadow-card)}
+.chart-title{font-family:var(--font-body);font-size:.625rem;text-transform:uppercase;letter-spacing:.1em;color:var(--night-muted);margin-bottom:.8rem;font-weight:600}
+
+/* Bar rows */
 .bar-row{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem}
-.bar-label{font-size:.7rem;color:var(--text-muted);width:70px;text-align:right;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.bar-track{flex:1;height:22px;background:var(--card-alt);border-radius:4px;position:relative;overflow:hidden}
+.bar-label{font-size:.7rem;color:var(--night-muted);width:70px;text-align:right;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar-track{flex:1;height:22px;background:var(--night-input);border-radius:4px;position:relative;overflow:hidden}
 .bar-fill{height:100%;border-radius:4px;transition:width 1.2s var(--spring);position:absolute;left:0;top:0}
 .bar-fill.prog{background:var(--steel);opacity:.6}
-.bar-fill.real{background:var(--amber)}
-.bar-val{font-size:.65rem;color:var(--text-muted);width:50px;text-align:left;flex-shrink:0;font-variant-numeric:tabular-nums}
+.bar-fill.real{background:var(--gradient-bar)}
+.bar-fill.borgona{background:var(--borgona)}
+.bar-val{font-size:.65rem;color:var(--night-muted);width:50px;text-align:left;flex-shrink:0;font-variant-numeric:tabular-nums}
+
+/* Data table */
 table.data-table{width:100%;border-collapse:collapse;font-size:.72rem;font-variant-numeric:tabular-nums}
-table.data-table th{text-align:left;padding:.4rem .5rem;color:var(--text-muted);font-weight:600;text-transform:uppercase;letter-spacing:.05em;font-size:.62rem;border-bottom:1px solid var(--steel);position:sticky;top:0;background:var(--card);z-index:1}
-table.data-table td{padding:.35rem .5rem;border-bottom:1px solid rgba(60,76,92,.3);color:var(--text)}
+table.data-table th{text-align:left;padding:.4rem .5rem;color:var(--night-muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:.6rem;border-bottom:1px solid var(--night-border);position:sticky;top:0;background:var(--night-input);z-index:1}
+table.data-table td{padding:.35rem .5rem;border-bottom:1px solid rgba(45,55,72,.4);color:var(--cream)}
 table.data-table tr:hover td{background:rgba(228,140,4,.05)}
-.badge{display:inline-block;padding:.1rem .4rem;border-radius:.25rem;font-size:.6rem;font-weight:700}
-.badge.red{background:rgba(196,77,99,.2);color:var(--borgona)}
-.badge.amber{background:rgba(228,140,4,.2);color:var(--amber)}
-.badge.gold{background:rgba(252,204,4,.15);color:var(--gold)}
-.badge.green{background:rgba(93,184,122,.2);color:var(--oliva)}
-.area-card{background:var(--card);border:1px solid var(--steel);border-radius:.75rem;padding:1rem;position:relative;overflow:hidden}
+
+/* Badges */
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.badge-danger{background:rgba(178,77,66,.15);color:var(--borgona)}
+.badge-warning{background:rgba(228,140,4,.15);color:var(--amber-light)}
+.badge-info{background:rgba(252,204,4,.15);color:var(--gold)}
+.badge-success{background:rgba(92,122,77,.15);color:var(--oliva-light)}
+
+/* Area cards */
+.area-card{background:var(--night-card);border:var(--border-card);border-radius:10px;padding:1rem;position:relative;overflow:hidden;box-shadow:var(--shadow-card)}
 .area-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;border-radius:4px 0 0 4px}
 .area-card.cocina::before{background:var(--amber)}
 .area-card.servicio::before{background:var(--gold)}
 .area-card.barra::before{background:var(--oliva)}
-.area-card.apoyo::before{background:var(--amber)}
-.area-card h3{font-size:.85rem;font-weight:700;margin-bottom:.4rem}
+.area-card.apoyo::before{background:var(--rust)}
+.area-card h3{font-family:var(--font-heading);font-size:.85rem;font-weight:700;margin-bottom:.4rem;letter-spacing:.05em}
 .area-card .area-stats{display:grid;grid-template-columns:1fr 1fr;gap:.2rem .5rem;font-size:.7rem}
-.area-card .area-stats dt{color:var(--text-muted)}
-.area-card .area-stats dd{color:var(--text);font-weight:600;font-variant-numeric:tabular-nums}
+.area-card .area-stats dt{color:var(--night-muted)}
+.area-card .area-stats dd{color:var(--cream);font-weight:600;font-variant-numeric:tabular-nums}
+
+/* Donut */
 .donut-container{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;justify-content:center}
-.donut-wrap{position:relative}
 .donut-legend{display:flex;flex-direction:column;gap:.35rem}
-.donut-legend-item{display:flex;align-items:center;gap:.4rem;font-size:.7rem;color:var(--text-muted)}
+.donut-legend-item{display:flex;align-items:center;gap:.4rem;font-size:.7rem;color:var(--night-muted)}
 .donut-legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
-.emp-card{background:var(--card);border:1px solid var(--steel);border-radius:.6rem;padding:.7rem .9rem;display:grid;grid-template-columns:auto 1fr auto;gap:.4rem .6rem;align-items:center;font-size:.72rem}
-.emp-card .emp-name{font-weight:600;color:var(--text)}
-.emp-card .emp-area{font-size:.65rem;color:var(--text-muted)}
+
+/* Employee cards */
+.emp-card{background:var(--night-card);border:var(--border-card);border-radius:8px;padding:.7rem .9rem;display:grid;grid-template-columns:auto 1fr auto;gap:.4rem .6rem;align-items:center;font-size:.72rem;box-shadow:var(--shadow-card)}
+.emp-card .emp-name{font-weight:700;color:var(--cream)}
+.emp-card .emp-area{font-size:.65rem;color:var(--night-muted)}
 .emp-card .emp-hours{text-align:right;font-variant-numeric:tabular-nums}
 .emp-card .emp-val{color:var(--amber);font-weight:700}
-.logo-text{font-family:'Source Serif 4',serif;font-size:2.2rem;font-weight:900;letter-spacing:.12em;color:var(--gold);text-align:center;margin-bottom:.5rem}
-.hero-title{font-family:'Source Serif 4',serif;font-size:2rem;font-weight:700;text-align:center;color:var(--text);margin-bottom:.3rem}
-.hero-sub{font-size:.85rem;color:var(--text-muted);text-align:center;margin-bottom:2rem}
+
+/* Hero */
+.logo-text{font-family:var(--font-heading);font-size:2.2rem;font-weight:900;letter-spacing:.12em;color:var(--gold);text-align:center;margin-bottom:.5rem;text-transform:uppercase}
+.logo-amp{font-family:var(--font-decorative);font-weight:400;font-size:1.6rem;color:var(--rust);vertical-align:middle;margin:0 .15em}
+.hero-title{font-family:var(--font-heading);font-size:1.8rem;font-weight:700;text-align:center;color:var(--cream);margin-bottom:.3rem;letter-spacing:.05em}
+.hero-sub{font-family:var(--font-accent);font-size:.85rem;color:var(--night-muted);text-align:center;margin-bottom:2rem}
 .hero-kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;max-width:500px;margin:0 auto}
-.hero-kpi{text-align:center;padding:1rem .5rem;background:var(--card);border-radius:.75rem;border:1px solid var(--steel)}
-.hero-kpi .hero-num{font-family:'Source Serif 4',serif;font-size:2rem;font-weight:900;color:var(--gold);line-height:1}
-.hero-kpi .hero-label{font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-muted);margin-top:.3rem}
+.hero-kpi{text-align:center;padding:1rem .5rem;background:var(--night-card);border-radius:10px;border:var(--border-kpi);box-shadow:var(--shadow-kpi)}
+.hero-kpi .hero-num{font-family:var(--font-display);font-size:2rem;font-weight:900;color:var(--gold);line-height:1}
+.hero-kpi .hero-label{font-family:var(--font-body);font-size:.625rem;text-transform:uppercase;letter-spacing:.1em;color:var(--night-muted);margin-top:.3rem}
 .hero-kpi .hero-sub-val{font-size:.75rem;font-weight:600}
 .hero-kpi .hero-sub-val.danger{color:var(--borgona)}
-.hero-footer{text-align:center;font-size:.7rem;color:var(--steel);margin-top:auto;padding-top:1.5rem}
-.stacked-bar{display:flex;height:24px;border-radius:4px;overflow:hidden;margin-bottom:.3rem}
-.stacked-bar div{transition:width 1.2s var(--spring);display:flex;align-items:center;justify-content:center;font-size:.55rem;color:var(--text);font-weight:600;min-width:0;overflow:hidden}
-.table-scroll{overflow-y:auto;max-height:55vh;border-radius:.75rem;border:1px solid var(--steel)}
-.table-scroll table.data-table th{background:var(--card-alt)}
+.hero-footer{text-align:center;font-size:.65rem;color:var(--steel);margin-top:auto;padding-top:1.5rem;letter-spacing:.3em;text-transform:uppercase}
+
+/* Comparison grid */
 .comparison-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:1rem 0}
-.comp-card{background:var(--card);border:1px solid var(--steel);border-radius:.75rem;padding:1rem}
-.comp-card h4{font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--text-muted);margin-bottom:.6rem}
-.comp-card .comp-row{display:flex;justify-content:space-between;font-size:.72rem;padding:.2rem 0;border-bottom:1px solid rgba(60,76,92,.2)}
+.comp-card{background:var(--night-card);border:var(--border-card);border-radius:10px;padding:1rem;box-shadow:var(--shadow-card)}
+.comp-card h4{font-family:var(--font-heading);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--night-muted);margin-bottom:.6rem}
+.comp-card .comp-row{display:flex;justify-content:space-between;font-size:.72rem;padding:.2rem 0;border-bottom:1px solid rgba(45,55,72,.3)}
 .comp-card .comp-row:last-child{border-bottom:none}
 .comp-card .comp-val{font-weight:700;font-variant-numeric:tabular-nums}
+
+/* Table scroll */
+.table-scroll{overflow-y:auto;max-height:55vh;border-radius:10px;border:1px solid var(--night-border)}
+.table-scroll table.data-table th{background:var(--night-input)}
+
+/* Animations */
+.anim-in{animation:fadeSlideIn .6s var(--spring) both}
+@keyframes fadeSlideIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* Responsive */
 @media(max-width:480px){
   .slide{padding:1.2rem 1rem 4.5rem}
   .logo-text{font-size:1.5rem}
-  .hero-title{font-size:1.3rem}
+  .hero-title{font-size:1.2rem}
   .hero-kpis{grid-template-columns:1fr 1fr;gap:.6rem}
   .hero-kpi .hero-num{font-size:1.5rem}
   .kpi-grid{grid-template-columns:1fr 1fr}
@@ -135,10 +200,8 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
   .nav,.slide-num{display:none!important}
   .slide{position:static;opacity:1;transform:none;pointer-events:auto;page-break-after:always;box-shadow:none}
   body{overflow:visible;height:auto}
+  body::before{display:none}
 }
-.anim-in{animation:fadeSlideIn .6s var(--spring) both}
-@keyframes fadeSlideIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-@keyframes countUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 </style>
 </head>
 <body>
@@ -146,9 +209,10 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
 <!-- SLIDE 1: PORTADA -->
 <div class="slide active" id="s1">
   <div style="flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center">
-    <div class="logo-text anim-in">ATTIC &amp; KELLER</div>
+    <div class="logo-text anim-in">ATTIC <span class="logo-amp">&amp;</span> KELLER</div>
     <h1 class="hero-title anim-in" style="animation-delay:.1s">Programadas vs Fichadas</h1>
     <p class="hero-sub anim-in" style="animation-delay:.2s">Calle 75 &middot; Junio 1&ndash;18, 2026</p>
+    <div class="divider" style="width:60%;margin:1rem auto"></div>
     <div class="hero-kpis">
       <div class="hero-kpi anim-in" style="animation-delay:.3s">
         <div class="hero-num" data-target="1965" data-suffix="h">0h</div>
@@ -169,7 +233,8 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
       </div>
     </div>
   </div>
-  <div class="hero-footer">Desglose de n&oacute;mina &middot; Base 30 d&iacute;as</div>
+  <div class="ornament">◆ ◆ ◆</div>
+  <div class="hero-footer">Desglose de nómina &middot; Base 30 días</div>
 </div>
 
 <!-- SLIDE 2: RESUMEN EJECUTIVO -->
@@ -184,7 +249,7 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
   <div class="chart-container">
     <div class="chart-title">Desglose de Horas Fichadas por Tipo</div>
     <div class="bar-row"><span class="bar-label">HO</span><div class="bar-track"><div class="bar-fill" style="width:0;background:var(--gold)" data-w="52.7%"></div></div><span class="bar-val">2,373h</span></div>
-    <div class="bar-row"><span class="bar-label">RN</span><div class="bar-track"><div class="bar-fill" style="width:0;background:var(--amber)" data-w="27.5%"></div></div><span class="bar-val">1,238h</span></div>
+    <div class="bar-row"><span class="bar-label">RN</span><div class="bar-track"><div class="bar-fill" style="width:0;background:var(--gradient-bar)" data-w="27.5%"></div></div><span class="bar-val">1,238h</span></div>
     <div class="bar-row"><span class="bar-label">HDD</span><div class="bar-track"><div class="bar-fill" style="width:0;background:var(--borgona)" data-w="7.2%"></div></div><span class="bar-val">325h</span></div>
     <div class="bar-row"><span class="bar-label">HEN</span><div class="bar-track"><div class="bar-fill" style="width:0;background:var(--rust)" data-w="7.3%"></div></div><span class="bar-val">330h</span></div>
     <div class="bar-row"><span class="bar-label">HDN</span><div class="bar-track"><div class="bar-fill" style="width:0;background:var(--steel)" data-w="3.2%"></div></div><span class="bar-val">142h</span></div>
@@ -192,13 +257,13 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
   </div>
   <div style="display:grid;gap:.8rem;grid-template-columns:1fr 1fr">
     <div class="insight-card"><strong>Horas Ordinarias</strong> representan el 53% del total fichado (2,373 de 4,505h). El resto son horas adicionales.</div>
-    <div class="insight-card danger"><strong>Recargos nocturnos</strong> (RN) son el componente m&aacute;s grande con 1,238h, equivalente a $7.0M en valor.</div>
+    <div class="insight-card danger"><strong>Recargos nocturnos</strong> (RN) son el componente más grande con 1,238h, equivalente a $7.0M en valor.</div>
   </div>
 </div>
 
 <!-- SLIDE 3: POR AREA -->
 <div class="slide" id="s3">
-  <h2 class="section-title">Desglose por <span>&Aacute;rea</span></h2>
+  <h2 class="section-title">Desglose por <span>Área</span></h2>
   <div class="area-cards-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1rem">
     <div class="area-card cocina">
       <h3>Cocina</h3>
@@ -242,11 +307,11 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
     </div>
   </div>
   <div class="chart-container">
-    <div class="chart-title">Programadas vs Fichadas por &Aacute;rea</div>
+    <div class="chart-title">Programadas vs Fichadas por Área</div>
     <div class="bar-row"><span class="bar-label">Cocina</span><div class="bar-track"><div class="bar-fill prog" style="width:0" data-w="57%"></div><div class="bar-fill real" style="width:0" data-w="100%"></div></div><span class="bar-val">1,624h</span></div>
     <div class="bar-row"><span class="bar-label">Servicio</span><div class="bar-track"><div class="bar-fill prog" style="width:0" data-w="41%"></div><div class="bar-fill real" style="width:0" data-w="100%"></div></div><span class="bar-val">1,757h</span></div>
     <div class="bar-row"><span class="bar-label">Barra</span><div class="bar-track"><div class="bar-fill prog" style="width:0" data-w="34%"></div><div class="bar-fill real" style="width:0" data-w="100%"></div></div><span class="bar-val">694h</span></div>
-    <div class="bar-row"><span class="bar-label">Apoyo</span><div class="bar-track"><div class="bar-fill real" style="width:0;background:var(--borgona)" data-w="26%"></div></div><span class="bar-val">430h</span></div>
+    <div class="bar-row"><span class="bar-label">Apoyo</span><div class="bar-track"><div class="bar-fill borgona" style="width:0" data-w="26%"></div></div><span class="bar-val">430h</span></div>
   </div>
 </div>
 
@@ -254,28 +319,28 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
 <div class="slide" id="s4">
   <h2 class="section-title">Ranking de <span>Exceso</span></h2>
   <div class="chart-container">
-    <div class="chart-title">Top 15 &mdash; Horas de Exceso (stacked: HO + HE + RN)</div>
+    <div class="chart-title">Top 15 — Horas de Exceso (stacked: HO + HE + RN)</div>
     <svg id="rankingChart" viewBox="0 0 600 340" style="width:100%;max-width:600px;margin:0 auto;display:block"></svg>
   </div>
   <div class="table-scroll" style="margin-top:.8rem;max-height:40vh">
     <table class="data-table">
-      <thead><tr><th>#</th><th>Nombre</th><th>&Aacute;rea</th><th>Prog</th><th>Real</th><th>Diff</th><th>HE</th><th>RN</th><th>Recargos</th></tr></thead>
+      <thead><tr><th>#</th><th>Nombre</th><th>Área</th><th>Prog</th><th>Real</th><th>Diff</th><th>HE</th><th>RN</th><th>Recargos</th></tr></thead>
       <tbody>
         <tr><td>1</td><td>Omar Rico</td><td>cocina</td><td>63</td><td>218</td><td style="color:var(--borgona)">+155</td><td>78</td><td>70</td><td>$766K</td></tr>
-        <tr><td>2</td><td>Iv&aacute;n Larrahondo</td><td>cocina</td><td>42</td><td>178</td><td style="color:var(--borgona)">+136</td><td>46</td><td>44</td><td>$510K</td></tr>
-        <tr><td>3</td><td>Leonardo Su&aacute;rez</td><td>servicio</td><td>120</td><td>239</td><td style="color:var(--borgona)">+120</td><td>81</td><td>64</td><td>$908K</td></tr>
+        <tr><td>2</td><td>Iván Larrahondo</td><td>cocina</td><td>42</td><td>178</td><td style="color:var(--borgona)">+136</td><td>46</td><td>44</td><td>$510K</td></tr>
+        <tr><td>3</td><td>Leonardo Suárez</td><td>servicio</td><td>120</td><td>239</td><td style="color:var(--borgona)">+120</td><td>81</td><td>64</td><td>$908K</td></tr>
         <tr><td>4</td><td>Esneider Blanco</td><td>cocina</td><td>104</td><td>221</td><td style="color:var(--borgona)">+117</td><td>74</td><td>52</td><td>$940K</td></tr>
-        <tr><td>5</td><td>Ver&oacute;nica Medina</td><td>servicio</td><td>44</td><td>154</td><td style="color:var(--borgona)">+110</td><td>33</td><td>49</td><td>$681K</td></tr>
-        <tr><td>6</td><td>Mart&iacute;n F. Orrego</td><td>servicio</td><td>70</td><td>166</td><td style="color:var(--borgona)">+96</td><td>55</td><td>43</td><td>$484K</td></tr>
+        <tr><td>5</td><td>Verónica Medina</td><td>servicio</td><td>44</td><td>154</td><td style="color:var(--borgona)">+110</td><td>33</td><td>49</td><td>$681K</td></tr>
+        <tr><td>6</td><td>Martín F. Orrego</td><td>servicio</td><td>70</td><td>166</td><td style="color:var(--borgona)">+96</td><td>55</td><td>43</td><td>$484K</td></tr>
         <tr><td>7</td><td>David Cubillos</td><td>servicio</td><td>69</td><td>163</td><td style="color:var(--borgona)">+94</td><td>54</td><td>55</td><td>$432K</td></tr>
         <tr><td>8</td><td>Oscar Moreno</td><td>servicio</td><td>79</td><td>171</td><td style="color:var(--borgona)">+92</td><td>51</td><td>51</td><td>$435K</td></tr>
         <tr><td>9</td><td>Giovanny Pompeyo</td><td>servicio</td><td>78</td><td>167</td><td style="color:var(--borgona)">+89</td><td>47</td><td>60</td><td>$477K</td></tr>
         <tr><td>10</td><td>Yelson Ruiz</td><td>servicio</td><td>64</td><td>152</td><td style="color:var(--borgona)">+88</td><td>41</td><td>41</td><td>$421K</td></tr>
         <tr><td>11</td><td>Yohan Mora</td><td>barra</td><td>64</td><td>137</td><td style="color:var(--borgona)">+73</td><td>46</td><td>43</td><td>$333K</td></tr>
-        <tr><td>12</td><td>Manuel Nore&ntilde;a</td><td>barra</td><td>60</td><td>130</td><td style="color:var(--borgona)">+70</td><td>37</td><td>45</td><td>$320K</td></tr>
-        <tr><td>13</td><td>Angie Rodr&iacute;guez</td><td>barra</td><td>69</td><td>134</td><td style="color:var(--borgona)">+65</td><td>42</td><td>34</td><td>$279K</td></tr>
+        <tr><td>12</td><td>Manuel Noreña</td><td>barra</td><td>60</td><td>130</td><td style="color:var(--borgona)">+70</td><td>37</td><td>45</td><td>$320K</td></tr>
+        <tr><td>13</td><td>Angie Rodríguez</td><td>barra</td><td>69</td><td>134</td><td style="color:var(--borgona)">+65</td><td>42</td><td>34</td><td>$279K</td></tr>
         <tr><td>14</td><td>Ronal Anzola</td><td>servicio</td><td>60</td><td>124</td><td style="color:var(--borgona)">+64</td><td>38</td><td>38</td><td>$321K</td></tr>
-        <tr><td>15</td><td>Leshlye T&eacute;llez</td><td>servicio</td><td>58</td><td>121</td><td style="color:var(--borgona)">+63</td><td>42</td><td>4</td><td>$172K</td></tr>
+        <tr><td>15</td><td>Leshlye Téllez</td><td>servicio</td><td>58</td><td>121</td><td style="color:var(--borgona)">+63</td><td>42</td><td>4</td><td>$172K</td></tr>
       </tbody>
     </table>
   </div>
@@ -290,66 +355,66 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
   <h2 class="section-title">Desglose de <span>Recargos</span></h2>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1rem">
     <div class="chart-container">
-      <div class="chart-title">Composici&oacute;n de Horas Extras</div>
+      <div class="chart-title">Composición de Horas Extras</div>
       <div class="donut-container">
-        <div class="donut-wrap">
+        <div style="position:relative">
           <svg viewBox="0 0 120 120" width="140" height="140">
-            <circle cx="60" cy="60" r="48" fill="none" stroke="var(--card-alt)" stroke-width="18"/>
-            <circle cx="60" cy="60" r="48" fill="none" stroke="#5DB87A" stroke-width="18" stroke-dasharray="67 234" stroke-dashoffset="0" transform="rotate(-90 60 60)"/>
-            <circle cx="60" cy="60" r="48" fill="none" stroke="#8C4434" stroke-width="18" stroke-dasharray="224 77" stroke-dashoffset="-67" transform="rotate(-90 60 60)"/>
-            <circle cx="60" cy="60" r="48" fill="none" stroke="#C44D63" stroke-width="18" stroke-dasharray="217 84" stroke-dashoffset="-291" transform="rotate(-90 60 60)"/>
-            <circle cx="60" cy="60" r="48" fill="none" stroke="#3C4C5C" stroke-width="18" stroke-dasharray="97 204" stroke-dashoffset="-508" transform="rotate(-90 60 60)"/>
-            <text x="60" y="58" text-anchor="middle" fill="var(--text)" font-size="15" font-weight="700" font-family="Source Serif 4">893h</text>
-            <text x="60" y="72" text-anchor="middle" fill="var(--text-muted)" font-size="8" font-family="Inter">HE total</text>
+            <circle cx="60" cy="60" r="48" fill="none" stroke="var(--night-input)" stroke-width="18"/>
+            <circle cx="60" cy="60" r="48" fill="none" stroke="var(--oliva)" stroke-width="18" stroke-dasharray="67 234" stroke-dashoffset="0" transform="rotate(-90 60 60)"/>
+            <circle cx="60" cy="60" r="48" fill="none" stroke="var(--rust)" stroke-width="18" stroke-dasharray="224 77" stroke-dashoffset="-67" transform="rotate(-90 60 60)"/>
+            <circle cx="60" cy="60" r="48" fill="none" stroke="var(--borgona)" stroke-width="18" stroke-dasharray="217 84" stroke-dashoffset="-291" transform="rotate(-90 60 60)"/>
+            <circle cx="60" cy="60" r="48" fill="none" stroke="var(--steel)" stroke-width="18" stroke-dasharray="97 204" stroke-dashoffset="-508" transform="rotate(-90 60 60)"/>
+            <text x="60" y="56" text-anchor="middle" fill="var(--cream)" font-size="15" font-weight="900" font-family="SmithyXT,Source Serif 4,serif">893h</text>
+            <text x="60" y="72" text-anchor="middle" fill="var(--night-muted)" font-size="8" font-family="Inter,sans-serif">HE total</text>
           </svg>
         </div>
         <div class="donut-legend">
-          <div class="donut-legend-item"><div class="donut-legend-dot" style="background:#5DB87A"></div>HED 11% (97h)</div>
-          <div class="donut-legend-item"><div class="donut-legend-dot" style="background:#8C4434"></div>HEN 37% (330h)</div>
-          <div class="donut-legend-item"><div class="donut-legend-dot" style="background:#C44D63"></div>HDD 36% (325h)</div>
-          <div class="donut-legend-item"><div class="donut-legend-dot" style="background:#3C4C5C"></div>HDN 16% (142h)</div>
+          <div class="donut-legend-item"><div class="donut-legend-dot" style="background:var(--oliva)"></div>HED 11% (97h)</div>
+          <div class="donut-legend-item"><div class="donut-legend-dot" style="background:var(--rust)"></div>HEN 37% (330h)</div>
+          <div class="donut-legend-item"><div class="donut-legend-dot" style="background:var(--borgona)"></div>HDD 36% (325h)</div>
+          <div class="donut-legend-item"><div class="donut-legend-dot" style="background:var(--steel)"></div>HDN 16% (142h)</div>
         </div>
       </div>
     </div>
     <div class="chart-container">
-      <div class="chart-title">Composici&oacute;n de Recargos ($)</div>
+      <div class="chart-title">Composición de Recargos ($)</div>
       <div class="donut-container">
-        <div class="donut-wrap">
+        <div style="position:relative">
           <svg viewBox="0 0 120 120" width="140" height="140">
-            <circle cx="60" cy="60" r="48" fill="none" stroke="var(--card-alt)" stroke-width="18"/>
-            <circle cx="60" cy="60" r="48" fill="none" stroke="#E48C04" stroke-width="18" stroke-dasharray="220 81" stroke-dashoffset="0" transform="rotate(-90 60 60)"/>
-            <circle cx="60" cy="60" r="48" fill="none" stroke="#C44D63" stroke-width="18" stroke-dasharray="58 243" stroke-dashoffset="-220" transform="rotate(-90 60 60)"/>
-            <circle cx="60" cy="60" r="48" fill="none" stroke="#3C4C5C" stroke-width="18" stroke-dasharray="24 277" stroke-dashoffset="-278" transform="rotate(-90 60 60)"/>
-            <text x="60" y="58" text-anchor="middle" fill="var(--text)" font-size="14" font-weight="700" font-family="Source Serif 4">$12.2M</text>
-            <text x="60" y="72" text-anchor="middle" fill="var(--text-muted)" font-size="8" font-family="Inter">recargos</text>
+            <circle cx="60" cy="60" r="48" fill="none" stroke="var(--night-input)" stroke-width="18"/>
+            <circle cx="60" cy="60" r="48" fill="none" stroke="var(--amber)" stroke-width="18" stroke-dasharray="220 81" stroke-dashoffset="0" transform="rotate(-90 60 60)"/>
+            <circle cx="60" cy="60" r="48" fill="none" stroke="var(--borgona)" stroke-width="18" stroke-dasharray="58 243" stroke-dashoffset="-220" transform="rotate(-90 60 60)"/>
+            <circle cx="60" cy="60" r="48" fill="none" stroke="var(--steel)" stroke-width="18" stroke-dasharray="24 277" stroke-dashoffset="-278" transform="rotate(-90 60 60)"/>
+            <text x="60" y="56" text-anchor="middle" fill="var(--cream)" font-size="14" font-weight="900" font-family="SmithyXT,Source Serif 4,serif">$12.2M</text>
+            <text x="60" y="72" text-anchor="middle" fill="var(--night-muted)" font-size="8" font-family="Inter,sans-serif">recargos</text>
           </svg>
         </div>
         <div class="donut-legend">
-          <div class="donut-legend-item"><div class="donut-legend-dot" style="background:#E48C04"></div>RN 73% ($8.9M)</div>
-          <div class="donut-legend-item"><div class="donut-legend-dot" style="background:#C44D63"></div>HDD 19% ($2.3M)</div>
-          <div class="donut-legend-item"><div class="donut-legend-dot" style="background:#3C4C5C"></div>HDN 8% ($1.0M)</div>
+          <div class="donut-legend-item"><div class="donut-legend-dot" style="background:var(--amber)"></div>RN 73% ($8.9M)</div>
+          <div class="donut-legend-item"><div class="donut-legend-dot" style="background:var(--borgona)"></div>HDD 19% ($2.3M)</div>
+          <div class="donut-legend-item"><div class="donut-legend-dot" style="background:var(--steel)"></div>HDN 8% ($1.0M)</div>
         </div>
       </div>
     </div>
   </div>
   <div class="chart-container">
-    <div class="chart-title">Recargos por &Aacute;rea (en pesos)</div>
+    <div class="chart-title">Recargos por Área (en pesos)</div>
     <div class="table-scroll" style="max-height:28vh">
       <table class="data-table">
-        <thead><tr><th>&Aacute;rea</th><th>RN</th><th>HDD</th><th>HDN</th><th>HED</th><th>HEN</th><th>Total</th></tr></thead>
+        <thead><tr><th>Área</th><th>RN</th><th>HDD</th><th>HDN</th><th>HED</th><th>HEN</th><th>Total</th></tr></thead>
         <tbody>
           <tr><td>Cocina</td><td>$3.4M</td><td>$0.7M</td><td>$0.3M</td><td>$0.2M</td><td>$0.1M</td><td style="font-weight:700">$4.7M</td></tr>
           <tr><td>Servicio</td><td>$3.7M</td><td>$0.9M</td><td>$0.4M</td><td>$0.1M</td><td>$0.0M</td><td style="font-weight:700">$5.1M</td></tr>
           <tr><td>Barra</td><td>$1.0M</td><td>$0.3M</td><td>$0.1M</td><td>$0.0M</td><td>$0.0M</td><td style="font-weight:700">$1.4M</td></tr>
           <tr><td>Apoyo</td><td>$0.7M</td><td>$0.2M</td><td>$0.1M</td><td>$0.0M</td><td>$0.0M</td><td style="font-weight:700">$974K</td></tr>
-          <tr style="font-weight:700;border-top:2px solid var(--steel)"><td>TOTAL</td><td>$8.9M</td><td>$2.3M</td><td>$1.0M</td><td>$0.2M</td><td>$0.1M</td><td style="color:var(--amber)">$12.2M</td></tr>
+          <tr style="font-weight:700;border-top:2px solid var(--night-border)"><td>TOTAL</td><td>$8.9M</td><td>$2.3M</td><td>$1.0M</td><td>$0.2M</td><td>$0.1M</td><td style="color:var(--amber)">$12.2M</td></tr>
         </tbody>
       </table>
     </div>
   </div>
   <div style="display:grid;gap:.8rem;grid-template-columns:1fr 1fr;margin-top:.8rem">
     <div class="insight-card"><strong>RN domina los recargos:</strong> el 73% del costo de recargos viene de horas nocturnas regulares ($8.9M de $12.2M).</div>
-    <div class="insight-card danger"><strong>Dominicales por &Aacute;rea:</strong> Cocina y Servicio concentran el 74% de los recargos dominicales (HDD).</div>
+    <div class="insight-card danger"><strong>Dominicales por Área:</strong> Cocina y Servicio concentran el 74% de los recargos dominicales (HDD).</div>
   </div>
 </div>
 
@@ -359,13 +424,13 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:.7rem;margin-bottom:1rem">
     <div class="emp-card"><div><div class="emp-name">Javier Duque</div><div class="emp-area">apoyo</div></div><div class="emp-hours">208h<div class="emp-val">$763K</div></div></div>
     <div class="emp-card"><div><div class="emp-name">Bryan Sierra</div><div class="emp-area">servicio</div></div><div class="emp-hours">159h<div class="emp-val">$363K</div></div></div>
-    <div class="emp-card"><div><div class="emp-name">Brandon Mej&iacute;a</div><div class="emp-area">barra</div></div><div class="emp-hours">123h<div class="emp-val">$216K</div></div></div>
+    <div class="emp-card"><div><div class="emp-name">Brandon Mejía</div><div class="emp-area">barra</div></div><div class="emp-hours">123h<div class="emp-val">$216K</div></div></div>
     <div class="emp-card"><div><div class="emp-name">Edilberto Aguilar</div><div class="emp-area">apoyo</div></div><div class="emp-hours">121h<div class="emp-val">$71K</div></div></div>
-    <div class="emp-card"><div><div class="emp-name">Nathalia Gonz&aacute;lez</div><div class="emp-area">apoyo</div></div><div class="emp-hours">100h<div class="emp-val">$141K</div></div></div>
+    <div class="emp-card"><div><div class="emp-name">Nathalia González</div><div class="emp-area">apoyo</div></div><div class="emp-hours">100h<div class="emp-val">$141K</div></div></div>
     <div class="emp-card"><div><div class="emp-name">Lizeth Casallas</div><div class="emp-area">barra</div></div><div class="emp-hours">100h<div class="emp-val">$123K</div></div></div>
   </div>
   <div class="kpi-grid" style="margin-bottom:1rem">
-    <div class="kpi-card borgona"><div class="kpi-label">Horas Sin Turno</div><div class="kpi-val">812h</div><div class="kpi-sub positive">18% del total fichado</div></div>
+    <div class="kpi-card borgona"><div class="kpi-label">Horas Sin Turno</div><div class="kpi-val">812h</div><div class="kpi-sub danger">18% del total fichado</div></div>
     <div class="kpi-card amber"><div class="kpi-label">Recargos Sin Turno</div><div class="kpi-val">$1.7M</div></div>
   </div>
   <div class="comparison-grid">
@@ -387,60 +452,61 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
     </div>
   </div>
   <div style="display:grid;gap:.8rem;grid-template-columns:1fr 1fr;margin-top:.8rem">
-    <div class="insight-card danger"><strong>Apoyo 100% sin turno:</strong> las 430h del &aacute;rea de Apoyo no tienen programaci&oacute;n asignada.</div>
-    <div class="insight-card"><strong>Acci&oacute;n recomendada:</strong> formalizar turnos para los 6 colaboradores sin asignaci&oacute;n, eliminando al menos 812h de exceso no planificado.</div>
+    <div class="insight-card danger"><strong>Apoyo 100% sin turno:</strong> las 430h del área de Apoyo no tienen programación asignada.</div>
+    <div class="insight-card"><strong>Acción recomendada:</strong> formalizar turnos para los 6 colaboradores sin asignación, eliminando al menos 812h de exceso no planificado.</div>
   </div>
 </div>
 
 <!-- SLIDE 7: TABLA COMPLETA -->
 <div class="slide" id="s7">
   <h2 class="section-title">Tabla <span>Completa</span></h2>
-  <p class="subtitle">33 colaboradores &middot; ordenados por exceso descendente</p>
+  <p class="subtitle">33 colaboradores · ordenados por exceso descendente</p>
   <div class="table-scroll" id="fullTable" style="max-height:65vh">
     <table class="data-table">
-      <thead><tr><th>Nombre</th><th>&Aacute;rea</th><th>Prog</th><th>Real</th><th>Diff</th><th>HE</th><th>RN</th><th>Recargos</th></tr></thead>
+      <thead><tr><th>Nombre</th><th>Área</th><th>Prog</th><th>Real</th><th>Diff</th><th>HE</th><th>RN</th><th>Recargos</th></tr></thead>
       <tbody>
-        <tr style="border-left:3px solid var(--borgona)"><td>Javier Duque</td><td>apoyo</td><td>0</td><td>208</td><td><span class="badge red">+208</span></td><td>41</td><td>57</td><td>$763K</td></tr>
-        <tr style="border-left:3px solid var(--borgona)"><td>Omar Rico</td><td>cocina</td><td>63</td><td>218</td><td><span class="badge red">+155</span></td><td>78</td><td>70</td><td>$766K</td></tr>
-        <tr style="border-left:3px solid var(--borgona)"><td>Iv&aacute;n Larrahondo</td><td>cocina</td><td>42</td><td>178</td><td><span class="badge red">+136</span></td><td>46</td><td>44</td><td>$510K</td></tr>
-        <tr style="border-left:3px solid var(--borgona)"><td>Leonardo Su&aacute;rez</td><td>servicio</td><td>120</td><td>239</td><td><span class="badge red">+120</span></td><td>81</td><td>64</td><td>$908K</td></tr>
-        <tr style="border-left:3px solid var(--borgona)"><td>Esneider Blanco</td><td>cocina</td><td>104</td><td>221</td><td><span class="badge red">+117</span></td><td>74</td><td>52</td><td>$940K</td></tr>
-        <tr style="border-left:3px solid var(--borgona)"><td>Ver&oacute;nica Medina</td><td>servicio</td><td>44</td><td>154</td><td><span class="badge red">+110</span></td><td>33</td><td>49</td><td>$681K</td></tr>
-        <tr style="border-left:3px solid var(--borgona)"><td>Bryan Sierra</td><td>servicio</td><td>0</td><td>159</td><td><span class="badge red">+159</span></td><td>40</td><td>40</td><td>$363K</td></tr>
-        <tr style="border-left:3px solid var(--amber)"><td>Mart&iacute;n F. Orrego</td><td>servicio</td><td>70</td><td>166</td><td><span class="badge amber">+96</span></td><td>55</td><td>43</td><td>$484K</td></tr>
-        <tr style="border-left:3px solid var(--amber)"><td>David Cubillos</td><td>servicio</td><td>69</td><td>163</td><td><span class="badge amber">+94</span></td><td>54</td><td>55</td><td>$432K</td></tr>
-        <tr style="border-left:3px solid var(--amber)"><td>Oscar Moreno</td><td>servicio</td><td>79</td><td>171</td><td><span class="badge amber">+92</span></td><td>51</td><td>51</td><td>$435K</td></tr>
-        <tr style="border-left:3px solid var(--amber)"><td>Giovanny Pompeyo</td><td>servicio</td><td>78</td><td>167</td><td><span class="badge amber">+89</span></td><td>47</td><td>60</td><td>$477K</td></tr>
-        <tr style="border-left:3px solid var(--amber)"><td>Yelson Ruiz</td><td>servicio</td><td>64</td><td>152</td><td><span class="badge amber">+88</span></td><td>41</td><td>41</td><td>$421K</td></tr>
-        <tr style="border-left:3px solid var(--amber)"><td>Brandon Mej&iacute;a</td><td>barra</td><td>0</td><td>123</td><td><span class="badge red">+123</span></td><td>14</td><td>35</td><td>$216K</td></tr>
-        <tr style="border-left:3px solid var(--gold)"><td>Yohan Mora</td><td>barra</td><td>64</td><td>137</td><td><span class="badge gold">+73</span></td><td>46</td><td>43</td><td>$333K</td></tr>
-        <tr style="border-left:3px solid var(--gold)"><td>Manuel Nore&ntilde;a</td><td>barra</td><td>60</td><td>130</td><td><span class="badge gold">+70</span></td><td>37</td><td>45</td><td>$320K</td></tr>
-        <tr style="border-left:3px solid var(--gold)"><td>Angie Rodr&iacute;guez</td><td>barra</td><td>69</td><td>134</td><td><span class="badge gold">+65</span></td><td>42</td><td>34</td><td>$279K</td></tr>
-        <tr style="border-left:3px solid var(--gold)"><td>Edilberto Aguilar</td><td>apoyo</td><td>0</td><td>121</td><td><span class="badge red">+121</span></td><td>8</td><td>4</td><td>$71K</td></tr>
-        <tr style="border-left:3px solid var(--gold)"><td>Nathalia Gonz&aacute;lez</td><td>apoyo</td><td>0</td><td>100</td><td><span class="badge red">+100</span></td><td>28</td><td>10</td><td>$141K</td></tr>
-        <tr style="border-left:3px solid var(--gold)"><td>Lizeth Casallas</td><td>barra</td><td>0</td><td>100</td><td><span class="badge red">+100</span></td><td>17</td><td>19</td><td>$123K</td></tr>
-        <tr style="border-left:3px solid var(--gold)"><td>Ronal Anzola</td><td>servicio</td><td>60</td><td>124</td><td><span class="badge gold">+64</span></td><td>38</td><td>38</td><td>$321K</td></tr>
-        <tr style="border-left:3px solid var(--gold)"><td>Leshlye T&eacute;llez</td><td>servicio</td><td>58</td><td>121</td><td><span class="badge gold">+63</span></td><td>42</td><td>4</td><td>$172K</td></tr>
-        <tr style="border-left:3px solid var(--gold)"><td>Ashlye T&eacute;llez</td><td>barra</td><td>41</td><td>70</td><td><span class="badge gold">+29</span></td><td>29</td><td>29</td><td>$175K</td></tr>
-        <tr style="border-left:3px solid var(--gold)"><td>Mauricio Laverde</td><td>cocina</td><td>110</td><td>169</td><td><span class="badge gold">+59</span></td><td>59</td><td>39</td><td>$479K</td></tr>
-        <tr style="border-left:3px solid var(--gold)"><td>Nicol&aacute;s Alfaro</td><td>cocina</td><td>72</td><td>117</td><td><span class="badge gold">+46</span></td><td>33</td><td>33</td><td>$355K</td></tr>
-        <tr style="border-left:3px solid var(--gold)"><td>Mart&iacute;n E. Orrego</td><td>servicio</td><td>72</td><td>117</td><td><span class="badge gold">+45</span></td><td>28</td><td>27</td><td>$321K</td></tr>
-        <tr style="border-left:3px solid var(--gold)"><td>Juan P. Narv&aacute;ez</td><td>cocina</td><td>110</td><td>160</td><td><span class="badge gold">+50</span></td><td>50</td><td>51</td><td>$364K</td></tr>
-        <tr style="border-left:3px solid var(--gold)"><td>Yohana Cruz</td><td>cocina</td><td>91</td><td>139</td><td><span class="badge gold">+48</span></td><td>48</td><td>36</td><td>$311K</td></tr>
-        <tr style="border-left:3px solid var(--gold)"><td>Wendy Aldana</td><td>cocina</td><td>114</td><td>142</td><td><span class="badge gold">+28</span></td><td>28</td><td>30</td><td>$390K</td></tr>
-        <tr style="border-left:3px solid var(--gold)"><td>Leidy Rozo</td><td>cocina</td><td>43</td><td>85</td><td><span class="badge gold">+42</span></td><td>42</td><td>0</td><td>$32K</td></tr>
-        <tr style="border-left:3px solid var(--gold)"><td>Leanis Aular</td><td>servicio</td><td>13</td><td>23</td><td><span class="badge gold">+10</span></td><td>10</td><td>8</td><td>$45K</td></tr>
-        <tr style="border-left:3px solid var(--oliva)"><td>Carlos S. Su&aacute;rez</td><td>cocina</td><td>100</td><td>93</td><td><span class="badge green">-6</span></td><td>17</td><td>17</td><td>$267K</td></tr>
-        <tr style="border-left:3px solid var(--oliva)"><td>Clara Gonz&aacute;lez</td><td>cocina</td><td>112</td><td>102</td><td><span class="badge green">-10</span></td><td>15</td><td>32</td><td>$283K</td></tr>
-        <tr style="border-left:3px solid var(--borgona)"><td>Ducibeth Ariola</td><td>cocina</td><td>44</td><td>0</td><td><span class="badge red">-44</span></td><td>0</td><td>0</td><td>$0</td></tr>
+        <tr style="border-left:3px solid var(--borgona)"><td>Javier Duque</td><td>apoyo</td><td>0</td><td>208</td><td><span class="badge badge-danger">+208</span></td><td>41</td><td>57</td><td>$763K</td></tr>
+        <tr style="border-left:3px solid var(--borgona)"><td>Omar Rico</td><td>cocina</td><td>63</td><td>218</td><td><span class="badge badge-danger">+155</span></td><td>78</td><td>70</td><td>$766K</td></tr>
+        <tr style="border-left:3px solid var(--borgona)"><td>Iván Larrahondo</td><td>cocina</td><td>42</td><td>178</td><td><span class="badge badge-danger">+136</span></td><td>46</td><td>44</td><td>$510K</td></tr>
+        <tr style="border-left:3px solid var(--borgona)"><td>Leonardo Suárez</td><td>servicio</td><td>120</td><td>239</td><td><span class="badge badge-danger">+120</span></td><td>81</td><td>64</td><td>$908K</td></tr>
+        <tr style="border-left:3px solid var(--borgona)"><td>Esneider Blanco</td><td>cocina</td><td>104</td><td>221</td><td><span class="badge badge-danger">+117</span></td><td>74</td><td>52</td><td>$940K</td></tr>
+        <tr style="border-left:3px solid var(--borgona)"><td>Verónica Medina</td><td>servicio</td><td>44</td><td>154</td><td><span class="badge badge-danger">+110</span></td><td>33</td><td>49</td><td>$681K</td></tr>
+        <tr style="border-left:3px solid var(--borgona)"><td>Bryan Sierra</td><td>servicio</td><td>0</td><td>159</td><td><span class="badge badge-danger">+159</span></td><td>40</td><td>40</td><td>$363K</td></tr>
+        <tr style="border-left:3px solid var(--amber)"><td>Martín F. Orrego</td><td>servicio</td><td>70</td><td>166</td><td><span class="badge badge-warning">+96</span></td><td>55</td><td>43</td><td>$484K</td></tr>
+        <tr style="border-left:3px solid var(--amber)"><td>David Cubillos</td><td>servicio</td><td>69</td><td>163</td><td><span class="badge badge-warning">+94</span></td><td>54</td><td>55</td><td>$432K</td></tr>
+        <tr style="border-left:3px solid var(--amber)"><td>Oscar Moreno</td><td>servicio</td><td>79</td><td>171</td><td><span class="badge badge-warning">+92</span></td><td>51</td><td>51</td><td>$435K</td></tr>
+        <tr style="border-left:3px solid var(--amber)"><td>Giovanny Pompeyo</td><td>servicio</td><td>78</td><td>167</td><td><span class="badge badge-warning">+89</span></td><td>47</td><td>60</td><td>$477K</td></tr>
+        <tr style="border-left:3px solid var(--amber)"><td>Yelson Ruiz</td><td>servicio</td><td>64</td><td>152</td><td><span class="badge badge-warning">+88</span></td><td>41</td><td>41</td><td>$421K</td></tr>
+        <tr style="border-left:3px solid var(--amber)"><td>Brandon Mejía</td><td>barra</td><td>0</td><td>123</td><td><span class="badge badge-danger">+123</span></td><td>14</td><td>35</td><td>$216K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Yohan Mora</td><td>barra</td><td>64</td><td>137</td><td><span class="badge badge-info">+73</span></td><td>46</td><td>43</td><td>$333K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Manuel Noreña</td><td>barra</td><td>60</td><td>130</td><td><span class="badge badge-info">+70</span></td><td>37</td><td>45</td><td>$320K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Angie Rodríguez</td><td>barra</td><td>69</td><td>134</td><td><span class="badge badge-info">+65</span></td><td>42</td><td>34</td><td>$279K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Edilberto Aguilar</td><td>apoyo</td><td>0</td><td>121</td><td><span class="badge badge-danger">+121</span></td><td>8</td><td>4</td><td>$71K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Nathalia González</td><td>apoyo</td><td>0</td><td>100</td><td><span class="badge badge-danger">+100</span></td><td>28</td><td>10</td><td>$141K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Lizeth Casallas</td><td>barra</td><td>0</td><td>100</td><td><span class="badge badge-danger">+100</span></td><td>17</td><td>19</td><td>$123K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Ronal Anzola</td><td>servicio</td><td>60</td><td>124</td><td><span class="badge badge-info">+64</span></td><td>38</td><td>38</td><td>$321K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Leshlye Téllez</td><td>servicio</td><td>58</td><td>121</td><td><span class="badge badge-info">+63</span></td><td>42</td><td>4</td><td>$172K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Ashlye Téllez</td><td>barra</td><td>41</td><td>70</td><td><span class="badge badge-info">+29</span></td><td>29</td><td>29</td><td>$175K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Mauricio Laverde</td><td>cocina</td><td>110</td><td>169</td><td><span class="badge badge-info">+59</span></td><td>59</td><td>39</td><td>$479K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Nicolás Alfaro</td><td>cocina</td><td>72</td><td>117</td><td><span class="badge badge-info">+46</span></td><td>33</td><td>33</td><td>$355K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Martín E. Orrego</td><td>servicio</td><td>72</td><td>117</td><td><span class="badge badge-info">+45</span></td><td>28</td><td>27</td><td>$321K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Juan P. Narváez</td><td>cocina</td><td>110</td><td>160</td><td><span class="badge badge-info">+50</span></td><td>50</td><td>51</td><td>$364K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Yohana Cruz</td><td>cocina</td><td>91</td><td>139</td><td><span class="badge badge-info">+48</span></td><td>48</td><td>36</td><td>$311K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Wendy Aldana</td><td>cocina</td><td>114</td><td>142</td><td><span class="badge badge-info">+28</span></td><td>28</td><td>30</td><td>$390K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Leidy Rozo</td><td>cocina</td><td>43</td><td>85</td><td><span class="badge badge-info">+42</span></td><td>42</td><td>0</td><td>$32K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Leanis Aular</td><td>servicio</td><td>13</td><td>23</td><td><span class="badge badge-info">+10</span></td><td>10</td><td>8</td><td>$45K</td></tr>
+        <tr style="border-left:3px solid var(--oliva)"><td>Carlos S. Suárez</td><td>cocina</td><td>100</td><td>93</td><td><span class="badge badge-success">-6</span></td><td>17</td><td>17</td><td>$267K</td></tr>
+        <tr style="border-left:3px solid var(--oliva)"><td>Clara González</td><td>cocina</td><td>112</td><td>102</td><td><span class="badge badge-success">-10</span></td><td>15</td><td>32</td><td>$283K</td></tr>
+        <tr style="border-left:3px solid var(--borgona)"><td>Ducibeth Ariola</td><td>cocina</td><td>44</td><td>0</td><td><span class="badge badge-danger">-44</span></td><td>0</td><td>0</td><td>$0</td></tr>
       </tbody>
     </table>
   </div>
-  <div style="margin-top:.8rem;display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;font-size:.65rem;color:var(--text-muted)">
-    <span><span class="badge red" style="margin-right:2px">+100%</span> Exceso cr&iacute;tico</span>
-    <span><span class="badge amber" style="margin-right:2px">50-99%</span> Exceso alto</span>
-    <span><span class="badge gold" style="margin-right:2px">&lt;50%</span> Exceso moderado</span>
-    <span><span class="badge green" style="margin-right:2px">Negativo</span> Bajo lo programado</span>
+  <div class="divider" style="margin-top:.8rem"></div>
+  <div style="display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;font-size:.65rem;color:var(--night-muted)">
+    <span><span class="badge badge-danger" style="margin-right:2px">+100%</span> Exceso crítico</span>
+    <span><span class="badge badge-warning" style="margin-right:2px">50-99%</span> Exceso alto</span>
+    <span><span class="badge badge-info" style="margin-right:2px">&lt;50%</span> Exceso moderado</span>
+    <span><span class="badge badge-success" style="margin-right:2px">Negativo</span> Bajo lo programado</span>
   </div>
 </div>
 
@@ -456,7 +522,6 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
   let current = 0;
   const total = slides.length;
 
-  // Build nav dots
   for(let i=0;i<total;i++){
     const btn = document.createElement('button');
     btn.setAttribute('aria-label','Slide '+(i+1));
@@ -484,13 +549,11 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
     slideNum.textContent = (current+1)+' / '+total;
   }
 
-  // Keyboard
   document.addEventListener('keydown',e=>{
     if(e.key==='ArrowRight'||e.key==='ArrowDown') goTo(current+1);
     if(e.key==='ArrowLeft'||e.key==='ArrowUp') goTo(current-1);
   });
 
-  // Touch swipe
   let touchStartX=0;
   document.addEventListener('touchstart',e=>{touchStartX=e.changedTouches[0].screenX;},{passive:true});
   document.addEventListener('touchend',e=>{
@@ -501,7 +564,6 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
     }
   },{passive:true});
 
-  // Counter animation
   function animateCounters(slide){
     const nums = slide.querySelectorAll('[data-target]');
     nums.forEach(el=>{
@@ -520,7 +582,6 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
     });
   }
 
-  // Bar animation
   function animateBars(slide){
     const bars = slide.querySelectorAll('.bar-fill[data-w]');
     bars.forEach((bar,i)=>{
@@ -528,7 +589,6 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
     });
   }
 
-  // Ranking chart
   function buildRankingChart(){
     const svg = document.getElementById('rankingChart');
     if(!svg) return;
@@ -561,11 +621,11 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
       const hoW = (d.ho/maxTotal)*chartW;
       const heW = (d.he/maxTotal)*chartW;
       const rnW = (d.rn/maxTotal)*chartW;
-      html += '<text x="'+(leftMargin-5)+'" y="'+(y+barH/2+4)+'" text-anchor="end" fill="#9BA8B7" font-size="9" font-family="Inter">'+d.name+'</text>';
+      html += '<text x="'+(leftMargin-5)+'" y="'+(y+barH/2+4)+'" text-anchor="end" fill="#9BA8B7" font-size="9" font-family="Inter,sans-serif">'+d.name+'</text>';
       html += '<rect x="'+leftMargin+'" y="'+y+'" width="'+hoW+'" height="'+barH+'" rx="2" fill="#FCCC04"/>';
-      if(d.he>0) html += '<rect x="'+(leftMargin+hoW)+'" y="'+y+'" width="'+heW+'" height="'+barH+'" rx="2" fill="#5DB87A"/>';
+      if(d.he>0) html += '<rect x="'+(leftMargin+hoW)+'" y="'+y+'" width="'+heW+'" height="'+barH+'" rx="2" fill="#5C7A4D"/>';
       if(d.rn>0) html += '<rect x="'+(leftMargin+hoW+heW)+'" y="'+y+'" width="'+rnW+'" height="'+barH+'" rx="2" fill="#E48C04"/>';
-      html += '<text x="'+(leftMargin+hoW+heW+rnW+5)+'" y="'+(y+barH/2+4)+'" fill="#F4ECE4" font-size="9" font-family="Inter" font-weight="600">'+d.total+'h</text>';
+      html += '<text x="'+(leftMargin+hoW+heW+rnW+5)+'" y="'+(y+barH/2+4)+'" fill="#F4ECE4" font-size="9" font-family="Inter,sans-serif" font-weight="600">'+d.total+'h</text>';
     });
     svg.innerHTML = html;
   }
@@ -577,7 +637,6 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
     if(idx===3) buildRankingChart();
   }
 
-  // Initial animation
   animateSlide(0);
 })();
 </script>
