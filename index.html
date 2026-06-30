@@ -596,8 +596,193 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
   </div>
 </div>
 
-<!-- SLIDE 8: TABLA COMPLETA -->
+<!-- SLIDE 8: EFICIENCIA POR HORA + PUNTO DE CORTE -->
 <div class="slide" id="s8">
+  <h2 class="section-title">Eficiencia <span>por Hora</span></h2>
+  <p class="subtitle">&iquest;A qu&eacute; hora el restaurante pierde dinero por horas extras?</p>
+
+  <div class="kpi-grid" style="margin-bottom:1rem">
+    <div class="kpi-card gold"><div class="kpi-label">Pico Rentable</div><div class="kpi-val" style="color:var(--gold)">19:00</div><div class="kpi-sub success">$5.4M/d&iacute;a margen</div></div>
+    <div class="kpi-card amber"><div class="kpi-label">Umbral RN +75%</div><div class="kpi-val" style="color:var(--amber)">21:00</div><div class="kpi-sub">$1.8M/d&iacute;a margen</div></div>
+    <div class="kpi-card rust"><div class="kpi-label">Punto Equilibrio</div><div class="kpi-val" style="color:var(--rust)">23:00</div><div class="kpi-sub danger">Margen $0.1M/d&iacute;a</div></div>
+    <div class="kpi-card borgona"><div class="kpi-label">P&eacute;rdida Neta</div><div class="kpi-val" style="color:var(--borgona)">01:00</div><div class="kpi-sub danger">-$0.03M/d&iacute;a</div></div>
+  </div>
+
+  <div class="chart-container" style="margin-bottom:.8rem">
+    <div class="chart-title">Margen Neto por Hora (Revenue &minus; Costo N&oacute;mina &minus; Recargos)</div>
+    <div style="display:grid;grid-template-columns:1fr;gap:.35rem">
+      <div class="bar-row"><span class="bar-label" style="color:var(--gold);font-weight:700">19:00</span><div class="bar-track"><div class="bar-fill" style="width:0;background:var(--gold)" data-w="100%"></div></div><span class="bar-val" style="color:var(--gold);font-weight:700">$5.01M</span></div>
+      <div class="bar-row"><span class="bar-label" style="color:var(--gold)">20:00</span><div class="bar-track"><div class="bar-fill" style="width:0;background:var(--gold)" data-w="74%"></div></div><span class="bar-val" style="color:var(--gold)">$3.71M</span></div>
+      <div class="bar-row"><span class="bar-label" style="color:var(--amber)">18:00</span><div class="bar-track"><div class="bar-fill" style="width:0;background:var(--amber)" data-w="51%"></div></div><span class="bar-val" style="color:var(--amber)">$2.56M</span></div>
+      <div class="bar-row"><span class="bar-label" style="color:var(--amber)">21:00</span><div class="bar-track"><div class="bar-fill" style="width:0;background:var(--amber)" data-w="26%"></div></div><span class="bar-val" style="color:var(--amber)">$1.29M</span></div>
+      <div class="bar-row"><span class="bar-label" style="color:var(--rust)">22:00</span><div class="bar-track"><div class="bar-fill" style="width:0;background:var(--rust)" data-w="11%"></div></div><span class="bar-val" style="color:var(--rust)">$0.56M</span></div>
+      <div class="bar-row"><span class="bar-label" style="color:var(--borgona)">23:00</span><div class="bar-track" style="border:1px solid var(--borgona)"><div class="bar-fill" style="width:0;background:var(--borgona)" data-w="2%"></div></div><span class="bar-val" style="color:var(--borgona);font-weight:700">$0.10M</span></div>
+      <div class="bar-row"><span class="bar-label" style="color:var(--borgona)">01:00</span><div class="bar-track" style="border:1px solid var(--borgona)"><div class="bar-fill" style="width:0;background:var(--borgona)" data-w="0.6%"></div></div><span class="bar-val" style="color:var(--borgona)">-$0.03M</span></div>
+    </div>
+  </div>
+
+  <div class="chart-container" style="margin-bottom:.8rem">
+    <div class="chart-title">&iquest;Vale la pena cerrar m&aacute;s temprano?</div>
+    <div class="table-scroll" style="max-height:20vh">
+      <table class="data-table">
+        <thead><tr><th>Escenario</th><th>Revenue Perdido</th><th>Margen Perdido</th><th>Ahorro Recargos</th><th style="color:var(--borgona)">Neto</th></tr></thead>
+        <tbody>
+          <tr><td>Cerrar 22:00</td><td>$71.5M</td><td>$50.0M</td><td>$14.0M</td><td style="color:var(--borgona);font-weight:700">&minus;$36.1M</td></tr>
+          <tr><td>Cerrar 23:00</td><td>$40.7M</td><td>$28.5M</td><td>$10.5M</td><td style="color:var(--borgona);font-weight:700">&minus;$18.0M</td></tr>
+          <tr><td>Cerrar 00:00</td><td>$23.8M</td><td>$16.7M</td><td>$6.5M</td><td style="color:var(--borgona)">&minus;$10.2M</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div style="display:grid;gap:.8rem;grid-template-columns:1fr 1fr">
+    <div class="insight-card danger"><strong>Cerrar m&aacute;s temprano PIERDE dinero:</strong> el margen de contribuci&oacute;n perdido siempre supera los recargos ahorrados. A las 23:00 el margen neto es solo $0.1M &mdash; punto de equilibrio.</div>
+    <div class="insight-card success"><strong>La soluci&oacute;n NO es cerrar antes:</strong> es redise&ntilde;ar turnos. El revenue nocturno ($85M/mes) vale la pena &mdash; el problema son las HE mal programadas, no la operaci&oacute;n nocturna.</div>
+  </div>
+</div>
+
+<!-- SLIDE 9: REDISEÑO DE TURNOS + MARGEN NOCTURNO -->
+<div class="slide" id="s9">
+  <h2 class="section-title">Redise&ntilde;o de <span>Turnos</span></h2>
+  <p class="subtitle">Propuesta para eliminar HE nocturnas manteniendo cobertura 100%</p>
+
+  <div class="chart-container" style="margin-bottom:.8rem">
+    <div class="chart-title">Turnos Ilegales y Problem&aacute;ticos &rarr; Propuesta</div>
+    <div class="table-scroll" style="max-height:28vh">
+      <table class="data-table">
+        <thead><tr><th>Turno</th><th>Actual</th><th>Problema</th><th>Propuesta</th><th>Ahorro/d&iacute;a</th></tr></thead>
+        <tbody>
+          <tr style="border-left:3px solid var(--borgona)"><td style="font-weight:700;color:var(--borgona)">B5</td><td>12h (11-23)</td><td style="color:var(--borgona)">ILEGAL 4h HE</td><td>B1 (11-19) + B2 (17-01)</td><td style="color:var(--oliva-light);font-weight:700">4h HE</td></tr>
+          <tr style="border-left:3px solid var(--borgona)"><td style="font-weight:700;color:var(--borgona)">APT</td><td>12h (11-23)</td><td style="color:var(--borgona)">ILEGAL 4h HE</td><td>A1 (11-19) + C-nuevo (16-22)</td><td style="color:var(--oliva-light);font-weight:700">4h HE</td></tr>
+          <tr style="border-left:3px solid var(--amber)"><td style="font-weight:700">C</td><td>16-23</td><td>2h RN</td><td>C-nuevo (16-22)</td><td style="color:var(--oliva-light);font-weight:700">2h RN</td></tr>
+          <tr style="border-left:3px solid var(--amber)"><td style="font-weight:700">CD</td><td>14-22:30</td><td>1.5h RN</td><td>D1 (14-21)</td><td style="color:var(--oliva-light);font-weight:700">1.5h RN</td></tr>
+          <tr style="border-left:3px solid var(--amber)"><td style="font-weight:700">P2</td><td>10-22:30</td><td>0.5h HE+RN</td><td>A1 (11:30-19:30)</td><td style="color:var(--oliva-light);font-weight:700">0.5h</td></tr>
+          <tr style="border-left:3px solid var(--gold)"><td style="font-weight:700;color:var(--gold)">+ Nuevo</td><td>&mdash;</td><td>Turno nocturno</td><td>N (21-01) 2 personas</td><td style="color:var(--night-muted)">RN programado</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div style="display:grid;gap:.8rem;grid-template-columns:1fr 1fr;margin-bottom:.8rem">
+    <div class="chart-container">
+      <div class="chart-title">&iquest;Vale la pena servir post-21:00?</div>
+      <div style="font-size:.72rem;display:flex;flex-direction:column;gap:.3rem">
+        <div style="display:flex;justify-content:space-between;padding:.35rem .5rem;background:rgba(92,122,77,.12);border-radius:4px"><span>Cocteles</span><span style="color:var(--oliva-light);font-weight:700">70% &rarr; 26.2% neto <span class="badge badge-success">S&Iacute;</span></span></div>
+        <div style="display:flex;justify-content:space-between;padding:.35rem .5rem;background:rgba(92,122,77,.12);border-radius:4px"><span>Licores Tragos</span><span style="color:var(--oliva-light);font-weight:700">72% &rarr; 28.2% <span class="badge badge-success">S&Iacute;</span></span></div>
+        <div style="display:flex;justify-content:space-between;padding:.35rem .5rem;background:rgba(92,122,77,.08);border-radius:4px"><span>Licores Botella</span><span style="color:var(--amber);font-weight:700">65% &rarr; 21.3% <span class="badge badge-success">S&Iacute;</span></span></div>
+        <div style="display:flex;justify-content:space-between;padding:.35rem .5rem;background:rgba(92,122,77,.08);border-radius:4px"><span>Cervezas</span><span style="color:var(--amber);font-weight:700">60% &rarr; 16.2% <span class="badge badge-success">S&Iacute;</span></span></div>
+        <div style="display:flex;justify-content:space-between;padding:.35rem .5rem;background:rgba(228,140,4,.08);border-radius:4px"><span>Pizzas</span><span style="color:var(--amber);font-weight:700">55% &rarr; 11.3% <span class="badge badge-warning">MARGINAL</span></span></div>
+        <div style="display:flex;justify-content:space-between;padding:.35rem .5rem;background:rgba(178,77,66,.12);border-radius:4px"><span style="font-weight:700">Fuertes (carnes)</span><span style="color:var(--borgona);font-weight:700">45% &rarr; 1.3% <span class="badge badge-danger">NO</span></span></div>
+      </div>
+      <div style="font-size:.65rem;color:var(--night-muted);margin-top:.5rem;line-height:1.4">Umbral: margen bruto &gt; 43.75% para cubrir RN+75%.<br><strong style="color:var(--borgona)">Fuertes (carnes) NO valen la pena post-21</strong> &mdash; su margen de 45% no cubre el costo nocturno.</div>
+    </div>
+    <div class="chart-container">
+      <div class="chart-title">Correlaci&oacute;n Producto &times; HE Nocturnas</div>
+      <div style="font-size:.72rem;display:flex;flex-direction:column;gap:.3rem">
+        <div style="display:flex;justify-content:space-between;padding:.35rem .5rem;background:rgba(178,77,66,.1);border-radius:4px"><span style="color:var(--borgona);font-weight:700">Pizza Jam&oacute;n Serrano</span><span>$25.5M &middot; obliga cocina hasta 23:00</span></div>
+        <div style="display:flex;justify-content:space-between;padding:.35rem .5rem;background:rgba(178,77,66,.1);border-radius:4px"><span style="color:var(--borgona);font-weight:700">Pizza Hawaiana</span><span>$13.9M &middot; mismo patr&oacute;n cocina</span></div>
+        <div style="display:flex;justify-content:space-between;padding:.35rem .5rem;background:rgba(178,77,66,.08);border-radius:4px"><span style="color:var(--borgona);font-weight:700">Pizza Pepperoni</span><span>$13.4M &middot; cocina completa nocturna</span></div>
+        <div style="display:flex;justify-content:space-between;padding:.35rem .5rem;background:rgba(228,140,4,.08);border-radius:4px"><span style="font-weight:700">Moscow Mule</span><span>$22.4M &middot; solo barra, sin HE cocina</span></div>
+        <div style="display:flex;justify-content:space-between;padding:.35rem .5rem;background:rgba(228,140,4,.08);border-radius:4px"><span style="font-weight:700">Stella (cerveza)</span><span>$21.4M &middot; sin cocina</span></div>
+        <div style="display:flex;justify-content:space-between;padding:.35rem .5rem;background:rgba(228,140,4,.06);border-radius:4px"><span style="font-weight:700">Mezcalita</span><span>$14.8M &middot; solo barra</span></div>
+      </div>
+      <div style="font-size:.65rem;color:var(--night-muted);margin-top:.5rem;line-height:1.4"><strong style="color:var(--borgona)">Las pizzas obligan a cocina hasta las 23:00</strong> &mdash; turno C (16-23) genera 705h con 2h RN.<br>Los cocteles NO generan HE de cocina &mdash; solo barra.</div>
+    </div>
+  </div>
+
+  <div class="insight-card"><strong>Conclusi&oacute;n:</strong> La operaci&oacute;n nocturna vale la pena para <span style="color:var(--oliva-light)">cocteles, licores y cervezas</span> (margen 60-72%). <span style="color:var(--borgona)">Los Fuertes (carnes) no cubren el costo nocturno.</span> Un men&uacute; nocturno reducido (solo barra + pizzas limitadas) eliminar&iacute;a la necesidad de cocina completa post-21:00.</div>
+</div>
+
+<!-- SLIDE 10: PLAN DE ACCIÓN -->
+<div class="slide" id="s10">
+  <h2 class="section-title">Plan de <span>Acci&oacute;n</span></h2>
+  <p class="subtitle">4 acciones concretas &middot; $22.3M/mes de ahorro &middot; sin perder revenue</p>
+
+  <div class="kpi-grid" style="margin-bottom:1rem">
+    <div class="kpi-card oliva"><div class="kpi-label">Ahorro Total</div><div class="kpi-val" style="color:var(--oliva-light)">$22.3M</div><div class="kpi-sub success">/mes</div></div>
+    <div class="kpi-card gold"><div class="kpi-label">Sin perder revenue</div><div class="kpi-val" style="color:var(--gold)">$19.4M</div><div class="kpi-sub success">87% del ahorro</div></div>
+    <div class="kpi-card amber"><div class="kpi-label">Reducci&oacute;n RN</div><div class="kpi-val" style="color:var(--amber)">65%</div><div class="kpi-sub">de recargos nocturnos</div></div>
+    <div class="kpi-card rust"><div class="kpi-label">Proyecci&oacute;n Anual</div><div class="kpi-val" style="color:var(--rust)">$268M</div><div class="kpi-sub">/a&ntilde;o</div></div>
+  </div>
+
+  <div style="display:grid;gap:.7rem;margin-bottom:.8rem">
+    <div class="chart-container" style="border-left:3px solid var(--oliva)">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.4rem">
+        <div>
+          <div style="font-family:var(--font-heading);font-size:.85rem;color:var(--oliva-light);letter-spacing:.05em">1. REDISE&Ntilde;AR TURNOS</div>
+          <div style="font-size:.65rem;color:var(--night-muted)">Eliminar HE nocturnas manteniendo cobertura 18-01</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-family:var(--font-display);font-size:1.3rem;color:var(--oliva-light);font-weight:900">$12.4M</div>
+          <div style="font-size:.6rem;color:var(--oliva-light)">/mes</div>
+        </div>
+      </div>
+      <div style="font-size:.7rem;color:var(--night-muted);line-height:1.5">
+        <span class="badge badge-success" style="margin-right:4px">DIFICULTAD BAJA</span>
+        B5 (12h barra) &rarr; B1+B2 parciales &middot; APT (12h cocina) &rarr; A1+C-nuevo &middot; C (16-23) &rarr; C-nuevo (16-22) &middot; CD (14-22:30) &rarr; D1 (14-21) &middot; Nuevo turno N (21-01) con RN programado. <strong style="color:var(--cream)">Sin perder revenue.</strong>
+      </div>
+    </div>
+
+    <div class="chart-container" style="border-left:3px solid var(--gold)">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.4rem">
+        <div>
+          <div style="font-family:var(--font-heading);font-size:.85rem;color:var(--gold);letter-spacing:.05em">2. REGULARIZAR SIN TURNO</div>
+          <div style="font-size:.65rem;color:var(--night-muted)">Formalizar 6 colaboradores sin asignaci&oacute;n</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-family:var(--font-display);font-size:1.3rem;color:var(--gold);font-weight:900">$7.0M</div>
+          <div style="font-size:.6rem;color:var(--gold)">/mes</div>
+        </div>
+      </div>
+      <div style="font-size:.7rem;color:var(--night-muted);line-height:1.5">
+        <span class="badge badge-success" style="margin-right:4px">DIFICULTAD BAJA</span>
+        6 personas con 812h descontroladas (18% del total). Asignar turnos formales elimina HE no planificadas y reduce recargos. <strong style="color:var(--borgona)">Javier Duque: 208h sin turno = $763K recargos.</strong>
+      </div>
+    </div>
+
+    <div class="chart-container" style="border-left:3px solid var(--amber)">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.4rem">
+        <div>
+          <div style="font-family:var(--font-heading);font-size:.85rem;color:var(--amber);letter-spacing:.05em">3. MEN&Uacute; NOCTURNO REDUCIDO</div>
+          <div style="font-size:.65rem;color:var(--night-muted)">Solo cocteles, licores, cervezas y pizzas limitadas post-21</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-family:var(--font-display);font-size:1.3rem;color:var(--amber);font-weight:900">$2.9M</div>
+          <div style="font-size:.6rem;color:var(--amber)">/mes</div>
+        </div>
+      </div>
+      <div style="font-size:.7rem;color:var(--night-muted);line-height:1.5">
+        <span class="badge badge-warning" style="margin-right:4px">DIFICULTAD MEDIA</span>
+        <span style="color:var(--borgona);font-weight:700">Fuertes (carnes) NO cubren el costo nocturno</span> (margen neto 1.3%). Cocina completa post-21 solo para pizzas. Elimina necesidad de chef nocturno.
+      </div>
+    </div>
+
+    <div class="chart-container" style="border-left:3px solid var(--rust)">
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:.4rem">
+        <div>
+          <div style="font-family:var(--font-heading);font-size:.85rem;color:var(--rust);letter-spacing:.05em">4. DESPLAZAR DEMANDA</div>
+          <div style="font-size:.65rem;color:var(--night-muted)">Incentivar reservas 18-20h con descuentos</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-family:var(--font-display);font-size:1.3rem;color:var(--rust);font-weight:900">$1.5M</div>
+          <div style="font-size:.6rem;color:var(--rust)">/mes</div>
+        </div>
+      </div>
+      <div style="font-size:.7rem;color:var(--night-muted);line-height:1.5">
+        <span class="badge badge-warning" style="margin-right:4px">DIFICULTAD MEDIA</span>
+        Happy hour 17-19, descuento 10% en reservas antes de 20:00. Mueve carga del pico 19-21 al valle 17-19. Reduce presi&oacute;n sobre turno C y checkout.
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid;gap:.8rem;grid-template-columns:1fr 1fr">
+    <div class="insight-card"><strong>Cada $1,000 vendidos post-21:00 genera $119 en recargos nocturnos</strong> (11.9%). El redise&ntilde;o de turnos elimina el 65% de los recargos manteniendo el 100% del revenue.</div>
+    <div class="insight-card success"><strong>$19.4M/mes sin perder un solo peso de ventas</strong> &mdash; solo reorganizando turnos y formalizando contratos. El restante $2.9M requiere ajuste de men&uacute; nocturno.</div>
+  </div>
+</div>
+
+<!-- SLIDE 11: TABLA COMPLETA -->
+<div class="slide" id="s11">
   <h2 class="section-title">Tabla <span>Completa</span></h2>
   <p class="subtitle">33 colaboradores &middot; ordenados por exceso descendente</p>
   <div class="table-scroll" id="fullTable" style="max-height:65vh">
@@ -651,7 +836,7 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
 
 <!-- NAVIGATION -->
 <div class="nav" id="nav"></div>
-<div class="slide-num" id="slideNum">1 / 8</div>
+<div class="slide-num" id="slideNum">1 / 11</div>
 
 <!-- THREE.JS -->
 <script type="importmap">
