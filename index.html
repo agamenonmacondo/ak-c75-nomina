@@ -781,8 +781,102 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
   </div>
 </div>
 
-<!-- SLIDE 11: TABLA COMPLETA -->
+<!-- SLIDE 11: AUDITORÍA DE TURNOS -->
 <div class="slide" id="s11">
+  <h2 class="section-title">Auditor&iacute;a de <span>Turnos</span></h2>
+  <p class="subtitle">42 tipos de turno &middot; 2 ilegales &middot; 12 con HE autom&aacute;tica &middot; 31 cruzan 21:00</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1.2rem">
+    <div class="kpi-card" style="border-left:3px solid var(--borgona)">
+      <div class="kpi-value" style="color:var(--borgona)">2</div>
+      <div class="kpi-label">Ilegales &gt;10h</div>
+      <div class="kpi-sub">B5 (12h) + APT (12h)</div>
+    </div>
+    <div class="kpi-card" style="border-left:3px solid var(--amber)">
+      <div class="kpi-value" style="color:var(--amber)">12</div>
+      <div class="kpi-label">Con HE autom&aacute;tica</div>
+      <div class="kpi-sub">+1h a +4h extras por dise&ntilde;o</div>
+    </div>
+    <div class="kpi-card" style="border-left:3px solid var(--gold)">
+      <div class="kpi-value" style="color:var(--gold)">31</div>
+      <div class="kpi-label">Cruzan 21:00</div>
+      <div class="kpi-sub">RN +75% autom&aacute;tico</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">
+    <!-- ILEGALES -->
+    <div style="background:var(--card);border-radius:8px;padding:1rem;border-left:3px solid var(--borgona)">
+      <div style="font-size:0.75rem;color:var(--borgona);font-weight:700;margin-bottom:0.5rem">&#x1F6A8; ILEGALES — Exceden 10h/d&iacute;a (Art. 161 CST)</div>
+      <table class="data-table" style="font-size:0.7rem">
+        <thead><tr><th>Turno</th><th>Horario</th><th>Horas</th><th>HE/d&iacute;a</th><th>RN/d&iacute;a</th></tr></thead>
+        <tbody>
+          <tr><td style="color:var(--borgona);font-weight:700">B5</td><td>12:00-00:00</td><td>12h</td><td>+4h</td><td>3h</td></tr>
+          <tr><td style="color:var(--borgona);font-weight:700">APT</td><td>10:00-22:00</td><td>12h</td><td>+4h</td><td>1h</td></tr>
+        </tbody>
+      </table>
+      <div style="font-size:0.65rem;color:var(--steel);margin-top:0.4rem">M&aacute;ximo legal: 10h/d&iacute;a (8h ordinarias + 2h extras). Art. 53 CP: derechos irrenunciables.</div>
+    </div>
+
+    <!-- HE AUTOMÁTICA -->
+    <div style="background:var(--card);border-radius:8px;padding:1rem;border-left:3px solid var(--amber)">
+      <div style="font-size:0.75rem;color:var(--amber);font-weight:700;margin-bottom:0.5rem">&#x26A0;&#xFE0F; HE AUTOM&Aacute;TICA POR DISE&Ntilde;O (&gt;8h)</div>
+      <table class="data-table" style="font-size:0.65rem">
+        <thead><tr><th>Turno</th><th>&Aacute;rea</th><th>Horario</th><th>H</th><th>HE</th><th>RN</th></tr></thead>
+        <tbody>
+          <tr><td style="color:var(--amber)">B4</td><td>barra</td><td>16-01</td><td>9</td><td>+1</td><td>4</td></tr>
+          <tr><td style="color:var(--amber)">MP1</td><td>barra</td><td>10-00</td><td>9</td><td>+1</td><td>3</td></tr>
+          <tr><td style="color:var(--amber)">CX</td><td>cocina</td><td>16-01</td><td>9</td><td>+1</td><td>4</td></tr>
+          <tr><td style="color:var(--amber)">P1</td><td>cocina</td><td>09-22</td><td>9</td><td>+1</td><td>1</td></tr>
+          <tr><td style="color:var(--amber)">MA1</td><td>servicio</td><td>01-10</td><td>9</td><td>+1</td><td>3</td></tr>
+          <tr><td style="color:var(--amber)">SX2</td><td>servicio</td><td>16-01</td><td>9</td><td>+1</td><td>2</td></tr>
+          <tr><td style="color:var(--amber)">SX4</td><td>servicio</td><td>15-00</td><td>9</td><td>+1</td><td>5</td></tr>
+          <tr><td style="color:var(--amber)">SX16</td><td>servicio</td><td>13-22</td><td>9</td><td>+1</td><td>0</td></tr>
+          <tr><td style="color:var(--amber)">P2L</td><td>servicio</td><td>11-23</td><td>9</td><td>+1</td><td>2</td></tr>
+          <tr><td style="color:var(--steel)">CD</td><td>cocina</td><td>14-22:30</td><td>8.5</td><td>+0.5</td><td>2</td></tr>
+          <tr><td style="color:var(--steel)">P2</td><td>cocina</td><td>10-22:30</td><td>8.5</td><td>+0.5</td><td>2</td></tr>
+          <tr><td style="color:var(--steel)">S</td><td>cocina</td><td>10-22:30</td><td>8.5</td><td>+0.5</td><td>2</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- TOP RN CRUZAN 21:00 -->
+  <div style="background:var(--card);border-radius:8px;padding:1rem;border-left:3px solid var(--gold);margin-bottom:1rem">
+    <div style="font-size:0.75rem;color:var(--gold);font-weight:700;margin-bottom:0.5rem">&#x1F305; TOP TURNOS QUE CRUZAN 21:00 (generan RN +75%)</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.5rem;font-size:0.65rem">
+      <div style="color:var(--cream)"><strong>6h RN (75-86% nocturno):</strong> CJN (17-01), N1 (18-01), N2 (17-01)</div>
+      <div style="color:var(--cream)"><strong>5h RN (50-67% nocturno):</strong> B3 (18-02), CX3 (18-02), SX4 (15-00)</div>
+      <div style="color:var(--cream)"><strong>4h RN (31-50% nocturno):</strong> B4, B6, B7, CX, CX7, SX3, SX24</div>
+    </div>
+  </div>
+
+  <!-- RECOMENDACIONES -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+    <div style="background:var(--card);border-radius:8px;padding:1rem;border-left:3px solid var(--oliva)">
+      <div style="font-size:0.75rem;color:var(--oliva);font-weight:700;margin-bottom:0.5rem">&#x1F4A1; Propuesta de Redise&ntilde;o</div>
+      <div style="font-size:0.65rem;color:var(--cream);line-height:1.5">
+        <div style="margin-bottom:0.3rem"><strong style="color:var(--borgona)">B5 12h barra →</strong> B1 (16-00, 8h) + B3 (18-02, 8h)</div>
+        <div style="margin-bottom:0.3rem"><strong style="color:var(--borgona)">APT 12h cocina →</strong> A1 (09-17, 8h) + C-nuevo (15-22, 7h)</div>
+        <div style="margin-bottom:0.3rem"><strong style="color:var(--amber)">9h → 8h:</strong> Reducir 1h o reasignar (B4, CX, SX4, P1, MA1, SX2, SX16, P2L, MP1)</div>
+        <div style="margin-bottom:0.3rem"><strong style="color:var(--gold)">Turno N nocturno:</strong> 21:00-01:00, RN programado, 2 personas</div>
+      </div>
+    </div>
+    <div style="background:var(--card);border-radius:8px;padding:1rem;border-left:3px solid var(--steel)">
+      <div style="font-size:0.75rem;color:var(--steel);font-weight:700;margin-bottom:0.5rem">&#x1F4CA; Impacto Cuantificado</div>
+      <div style="font-size:0.65rem;color:var(--cream);line-height:1.5">
+        <div style="margin-bottom:0.3rem"><strong>2 ilegales</strong> = 8h HE + 4h RN por persona/d&iacute;a</div>
+        <div style="margin-bottom:0.3rem"><strong>12 con HE autom&aacute;tica</strong> = +14h HE/d&iacute;a acumuladas</div>
+        <div style="margin-bottom:0.3rem"><strong>31 cruzan 21:00</strong> = 87% del costo de recargos</div>
+        <div style="margin-bottom:0.3rem"><strong>Ahorro redise&ntilde;o:</strong> $12.4M/mes (sin perder revenue)</div>
+        <div><strong>Ahorro formalizaci&oacute;n sin turno:</strong> $7.0M/mes</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SLIDE 12: TABLA COMPLETA -->
+<div class="slide" id="s12">
   <h2 class="section-title">Tabla <span>Completa</span></h2>
   <p class="subtitle">33 colaboradores &middot; ordenados por exceso descendente</p>
   <div class="table-scroll" id="fullTable" style="max-height:65vh">
@@ -836,7 +930,7 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
 
 <!-- NAVIGATION -->
 <div class="nav" id="nav"></div>
-<div class="slide-num" id="slideNum">1 / 11</div>
+<div class="slide-num" id="slideNum">1 / 12</div>
 
 <!-- THREE.JS -->
 <script type="importmap">
