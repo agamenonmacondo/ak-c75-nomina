@@ -37,6 +37,9 @@
 html{font-size:16px;scroll-behavior:smooth}
 body{font-family:var(--font-body);background:var(--night);color:var(--night-text);overflow:hidden;height:100dvh;width:100vw}
 
+/* Three.js canvas behind everything */
+#three-canvas{position:fixed;inset:0;z-index:0;pointer-events:none}
+
 /* Texture overlay */
 body::before{content:'';position:fixed;inset:0;opacity:0.04;pointer-events:none;z-index:9999;
   background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
@@ -45,7 +48,7 @@ body::before{content:'';position:fixed;inset:0;opacity:0.04;pointer-events:none;
 h1,h2,h3{font-family:var(--font-heading);letter-spacing:.05em;text-transform:uppercase}
 .kpi-val,.hero-num,.kpi-number{font-family:var(--font-display);font-variant-numeric:tabular-nums}
 
-.slide{position:absolute;inset:0;display:flex;flex-direction:column;padding:2rem 2.5rem 5rem;overflow-y:auto;opacity:0;transform:translateX(60px);transition:opacity .5s var(--ease-out),transform .5s var(--ease-out);pointer-events:none;scrollbar-width:thin;scrollbar-color:var(--steel) transparent}
+.slide{position:absolute;inset:0;display:flex;flex-direction:column;padding:2rem 2.5rem 5rem;overflow-y:auto;opacity:0;transform:translateX(60px);transition:opacity .5s var(--ease-out),transform .5s var(--ease-out);pointer-events:none;scrollbar-width:thin;scrollbar-color:var(--steel) transparent;z-index:1}
 .slide.active{opacity:1;transform:translateX(0);pointer-events:auto}
 .slide.exit-left{opacity:0;transform:translateX(-60px)}
 
@@ -57,7 +60,7 @@ h1,h2,h3{font-family:var(--font-heading);letter-spacing:.05em;text-transform:upp
 
 /* KPI Grid */
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem}
-.kpi-card{background:var(--night-card);border-radius:10px;padding:1.2rem 1rem;display:flex;flex-direction:column;gap:.25rem;position:relative;overflow:hidden;box-shadow:var(--shadow-card);border:var(--border-card);transition:transform .2s,box-shadow .2s}
+.kpi-card{background:var(--night-card);border-radius:10px;padding:1.2rem 1rem;display:flex;flex-direction:column;gap:.25rem;position:relative;overflow:hidden;box-shadow:var(--shadow-card);border:var(--border-card);transition:transform .2s,box-shadow .2s;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);background:rgba(22,27,34,0.85)}
 .kpi-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-card-hover)}
 .kpi-card::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;border-radius:3px 0 0 3px}
 .kpi-card.gold::before{background:var(--gold)}
@@ -85,13 +88,13 @@ h1,h2,h3{font-family:var(--font-heading);letter-spacing:.05em;text-transform:upp
 .ornament{color:var(--amber);font-size:.625rem;letter-spacing:.3em;text-align:center;margin:.5rem 0}
 
 /* Insight cards */
-.insight-card{background:var(--night-input);border-left:3px solid var(--amber);border-radius:8px;padding:.8rem 1rem;font-size:.78rem;color:var(--night-muted);line-height:1.5}
+.insight-card{background:rgba(30,39,51,0.85);border-left:3px solid var(--amber);border-radius:8px;padding:.8rem 1rem;font-size:.78rem;color:var(--night-muted);line-height:1.5;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .insight-card strong{color:var(--cream)}
 .insight-card.danger{border-left-color:var(--borgona)}
 .insight-card.success{border-left-color:var(--oliva)}
 
 /* Chart containers */
-.chart-container{background:var(--night-card);border:var(--border-card);border-radius:10px;padding:1.2rem;margin:1rem 0;box-shadow:var(--shadow-card)}
+.chart-container{background:rgba(22,27,34,0.85);border:var(--border-card);border-radius:10px;padding:1.2rem;margin:1rem 0;box-shadow:var(--shadow-card);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .chart-title{font-family:var(--font-body);font-size:.625rem;text-transform:uppercase;letter-spacing:.1em;color:var(--night-muted);margin-bottom:.8rem;font-weight:600}
 
 /* Bar rows */
@@ -106,7 +109,7 @@ h1,h2,h3{font-family:var(--font-heading);letter-spacing:.05em;text-transform:upp
 
 /* Data table */
 table.data-table{width:100%;border-collapse:collapse;font-size:.72rem;font-variant-numeric:tabular-nums}
-table.data-table th{text-align:left;padding:.4rem .5rem;color:var(--night-muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:.6rem;border-bottom:1px solid var(--night-border);position:sticky;top:0;background:var(--night-input);z-index:1}
+table.data-table th{text-align:left;padding:.4rem .5rem;color:var(--night-muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:.6rem;border-bottom:1px solid var(--night-border);position:sticky;top:0;background:rgba(30,39,51,0.95);z-index:1;backdrop-filter:blur(4px)}
 table.data-table td{padding:.35rem .5rem;border-bottom:1px solid rgba(45,55,72,.4);color:var(--cream)}
 table.data-table tr:hover td{background:rgba(228,140,4,.05)}
 
@@ -118,7 +121,7 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
 .badge-success{background:rgba(92,122,77,.15);color:var(--oliva-light)}
 
 /* Area cards */
-.area-card{background:var(--night-card);border:var(--border-card);border-radius:10px;padding:1rem;position:relative;overflow:hidden;box-shadow:var(--shadow-card)}
+.area-card{background:rgba(22,27,34,0.85);border:var(--border-card);border-radius:10px;padding:1rem;position:relative;overflow:hidden;box-shadow:var(--shadow-card);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .area-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;border-radius:4px 0 0 4px}
 .area-card.cocina::before{background:var(--amber)}
 .area-card.servicio::before{background:var(--gold)}
@@ -136,7 +139,7 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
 .donut-legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
 
 /* Employee cards */
-.emp-card{background:var(--night-card);border:var(--border-card);border-radius:8px;padding:.7rem .9rem;display:grid;grid-template-columns:auto 1fr auto;gap:.4rem .6rem;align-items:center;font-size:.72rem;box-shadow:var(--shadow-card)}
+.emp-card{background:rgba(22,27,34,0.85);border:var(--border-card);border-radius:8px;padding:.7rem .9rem;display:grid;grid-template-columns:auto 1fr auto;gap:.4rem .6rem;align-items:center;font-size:.72rem;box-shadow:var(--shadow-card);backdrop-filter:blur(8px)}
 .emp-card .emp-name{font-weight:700;color:var(--cream)}
 .emp-card .emp-area{font-size:.65rem;color:var(--night-muted)}
 .emp-card .emp-hours{text-align:right;font-variant-numeric:tabular-nums}
@@ -148,7 +151,7 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
 .hero-title{font-family:var(--font-heading);font-size:1.8rem;font-weight:700;text-align:center;color:var(--cream);margin-bottom:.3rem;letter-spacing:.05em}
 .hero-sub{font-family:var(--font-accent);font-size:.85rem;color:var(--night-muted);text-align:center;margin-bottom:2rem}
 .hero-kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;max-width:500px;margin:0 auto}
-.hero-kpi{text-align:center;padding:1rem .5rem;background:var(--night-card);border-radius:10px;border:var(--border-kpi);box-shadow:var(--shadow-kpi)}
+.hero-kpi{text-align:center;padding:1rem .5rem;background:rgba(22,27,34,0.85);border-radius:10px;border:var(--border-kpi);box-shadow:var(--shadow-kpi);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .hero-kpi .hero-num{font-family:var(--font-display);font-size:2rem;font-weight:900;color:var(--gold);line-height:1}
 .hero-kpi .hero-label{font-family:var(--font-body);font-size:.625rem;text-transform:uppercase;letter-spacing:.1em;color:var(--night-muted);margin-top:.3rem}
 .hero-kpi .hero-sub-val{font-size:.75rem;font-weight:600}
@@ -157,15 +160,16 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
 
 /* Comparison grid */
 .comparison-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:1rem 0}
-.comp-card{background:var(--night-card);border:var(--border-card);border-radius:10px;padding:1rem;box-shadow:var(--shadow-card)}
+.comp-card{background:rgba(22,27,34,0.85);border:var(--border-card);border-radius:10px;padding:1rem;box-shadow:var(--shadow-card);backdrop-filter:blur(8px)}
 .comp-card h4{font-family:var(--font-heading);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--night-muted);margin-bottom:.6rem}
 .comp-card .comp-row{display:flex;justify-content:space-between;font-size:.72rem;padding:.2rem 0;border-bottom:1px solid rgba(45,55,72,.3)}
 .comp-card .comp-row:last-child{border-bottom:none}
 .comp-card .comp-val{font-weight:700;font-variant-numeric:tabular-nums}
 
+
 /* Table scroll */
 .table-scroll{overflow-y:auto;max-height:55vh;border-radius:10px;border:1px solid var(--night-border)}
-.table-scroll table.data-table th{background:var(--night-input)}
+.table-scroll table.data-table th{background:rgba(30,39,51,0.95)}
 
 /* Animations */
 .anim-in{animation:fadeSlideIn .6s var(--spring) both}
@@ -186,6 +190,7 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
   .comparison-grid{grid-template-columns:1fr}
   .donut-container{flex-direction:column}
   .emp-card{grid-template-columns:auto 1fr;font-size:.65rem}
+  
 }
 @media(max-width:375px){
   .slide{padding:1rem .8rem 4rem}
@@ -201,10 +206,14 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
   .slide{position:static;opacity:1;transform:none;pointer-events:auto;page-break-after:always;box-shadow:none}
   body{overflow:visible;height:auto}
   body::before{display:none}
+  #three-canvas{display:none}
 }
 </style>
 </head>
 <body>
+
+<!-- THREE.JS BACKGROUND -->
+<canvas id="three-canvas"></canvas>
 
 <!-- SLIDE 1: PORTADA -->
 <div class="slide active" id="s1">
@@ -233,8 +242,8 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
       </div>
     </div>
   </div>
-  <div class="ornament">◆ ◆ ◆</div>
-  <div class="hero-footer">Desglose de nómina &middot; Base 30 días</div>
+  <div class="ornament">&#9670; &#9670; &#9670;</div>
+  <div class="hero-footer">Desglose de n&oacute;mina &middot; Base 30 d&iacute;as</div>
 </div>
 
 <!-- SLIDE 2: RESUMEN EJECUTIVO -->
@@ -257,13 +266,13 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
   </div>
   <div style="display:grid;gap:.8rem;grid-template-columns:1fr 1fr">
     <div class="insight-card"><strong>Horas Ordinarias</strong> representan el 53% del total fichado (2,373 de 4,505h). El resto son horas adicionales.</div>
-    <div class="insight-card danger"><strong>Recargos nocturnos</strong> (RN) son el componente más grande con 1,238h, equivalente a $7.0M en valor.</div>
+    <div class="insight-card danger"><strong>Recargos nocturnos</strong> (RN) son el componente m&aacute;s grande con 1,238h, equivalente a $7.0M en valor.</div>
   </div>
 </div>
 
 <!-- SLIDE 3: POR AREA -->
 <div class="slide" id="s3">
-  <h2 class="section-title">Desglose por <span>Área</span></h2>
+  <h2 class="section-title">Desglose por <span>&Aacute;rea</span></h2>
   <div class="area-cards-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1rem">
     <div class="area-card cocina">
       <h3>Cocina</h3>
@@ -307,7 +316,7 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
     </div>
   </div>
   <div class="chart-container">
-    <div class="chart-title">Programadas vs Fichadas por Área</div>
+    <div class="chart-title">Programadas vs Fichadas por &Aacute;rea</div>
     <div class="bar-row"><span class="bar-label">Cocina</span><div class="bar-track"><div class="bar-fill prog" style="width:0" data-w="57%"></div><div class="bar-fill real" style="width:0" data-w="100%"></div></div><span class="bar-val">1,624h</span></div>
     <div class="bar-row"><span class="bar-label">Servicio</span><div class="bar-track"><div class="bar-fill prog" style="width:0" data-w="41%"></div><div class="bar-fill real" style="width:0" data-w="100%"></div></div><span class="bar-val">1,757h</span></div>
     <div class="bar-row"><span class="bar-label">Barra</span><div class="bar-track"><div class="bar-fill prog" style="width:0" data-w="34%"></div><div class="bar-fill real" style="width:0" data-w="100%"></div></div><span class="bar-val">694h</span></div>
@@ -319,28 +328,28 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
 <div class="slide" id="s4">
   <h2 class="section-title">Ranking de <span>Exceso</span></h2>
   <div class="chart-container">
-    <div class="chart-title">Top 15 — Horas de Exceso (stacked: HO + HE + RN)</div>
+    <div class="chart-title">Top 15 &mdash; Horas de Exceso (stacked: HO + HE + RN)</div>
     <svg id="rankingChart" viewBox="0 0 600 340" style="width:100%;max-width:600px;margin:0 auto;display:block"></svg>
   </div>
   <div class="table-scroll" style="margin-top:.8rem;max-height:40vh">
     <table class="data-table">
-      <thead><tr><th>#</th><th>Nombre</th><th>Área</th><th>Prog</th><th>Real</th><th>Diff</th><th>HE</th><th>RN</th><th>Recargos</th></tr></thead>
+      <thead><tr><th>#</th><th>Nombre</th><th>&Aacute;rea</th><th>Prog</th><th>Real</th><th>Diff</th><th>HE</th><th>RN</th><th>Recargos</th></tr></thead>
       <tbody>
         <tr><td>1</td><td>Omar Rico</td><td>cocina</td><td>63</td><td>218</td><td style="color:var(--borgona)">+155</td><td>78</td><td>70</td><td>$766K</td></tr>
-        <tr><td>2</td><td>Iván Larrahondo</td><td>cocina</td><td>42</td><td>178</td><td style="color:var(--borgona)">+136</td><td>46</td><td>44</td><td>$510K</td></tr>
-        <tr><td>3</td><td>Leonardo Suárez</td><td>servicio</td><td>120</td><td>239</td><td style="color:var(--borgona)">+120</td><td>81</td><td>64</td><td>$908K</td></tr>
+        <tr><td>2</td><td>Iv&aacute;n Larrahondo</td><td>cocina</td><td>42</td><td>178</td><td style="color:var(--borgona)">+136</td><td>46</td><td>44</td><td>$510K</td></tr>
+        <tr><td>3</td><td>Leonardo Su&aacute;rez</td><td>servicio</td><td>120</td><td>239</td><td style="color:var(--borgona)">+120</td><td>81</td><td>64</td><td>$908K</td></tr>
         <tr><td>4</td><td>Esneider Blanco</td><td>cocina</td><td>104</td><td>221</td><td style="color:var(--borgona)">+117</td><td>74</td><td>52</td><td>$940K</td></tr>
-        <tr><td>5</td><td>Verónica Medina</td><td>servicio</td><td>44</td><td>154</td><td style="color:var(--borgona)">+110</td><td>33</td><td>49</td><td>$681K</td></tr>
-        <tr><td>6</td><td>Martín F. Orrego</td><td>servicio</td><td>70</td><td>166</td><td style="color:var(--borgona)">+96</td><td>55</td><td>43</td><td>$484K</td></tr>
+        <tr><td>5</td><td>Ver&oacute;nica Medina</td><td>servicio</td><td>44</td><td>154</td><td style="color:var(--borgona)">+110</td><td>33</td><td>49</td><td>$681K</td></tr>
+        <tr><td>6</td><td>Mart&iacute;n F. Orrego</td><td>servicio</td><td>70</td><td>166</td><td style="color:var(--borgona)">+96</td><td>55</td><td>43</td><td>$484K</td></tr>
         <tr><td>7</td><td>David Cubillos</td><td>servicio</td><td>69</td><td>163</td><td style="color:var(--borgona)">+94</td><td>54</td><td>55</td><td>$432K</td></tr>
         <tr><td>8</td><td>Oscar Moreno</td><td>servicio</td><td>79</td><td>171</td><td style="color:var(--borgona)">+92</td><td>51</td><td>51</td><td>$435K</td></tr>
         <tr><td>9</td><td>Giovanny Pompeyo</td><td>servicio</td><td>78</td><td>167</td><td style="color:var(--borgona)">+89</td><td>47</td><td>60</td><td>$477K</td></tr>
         <tr><td>10</td><td>Yelson Ruiz</td><td>servicio</td><td>64</td><td>152</td><td style="color:var(--borgona)">+88</td><td>41</td><td>41</td><td>$421K</td></tr>
         <tr><td>11</td><td>Yohan Mora</td><td>barra</td><td>64</td><td>137</td><td style="color:var(--borgona)">+73</td><td>46</td><td>43</td><td>$333K</td></tr>
-        <tr><td>12</td><td>Manuel Noreña</td><td>barra</td><td>60</td><td>130</td><td style="color:var(--borgona)">+70</td><td>37</td><td>45</td><td>$320K</td></tr>
-        <tr><td>13</td><td>Angie Rodríguez</td><td>barra</td><td>69</td><td>134</td><td style="color:var(--borgona)">+65</td><td>42</td><td>34</td><td>$279K</td></tr>
+        <tr><td>12</td><td>Manuel Nore&ntilde;a</td><td>barra</td><td>60</td><td>130</td><td style="color:var(--borgona)">+70</td><td>37</td><td>45</td><td>$320K</td></tr>
+        <tr><td>13</td><td>Angie Rodr&iacute;guez</td><td>barra</td><td>69</td><td>134</td><td style="color:var(--borgona)">+65</td><td>42</td><td>34</td><td>$279K</td></tr>
         <tr><td>14</td><td>Ronal Anzola</td><td>servicio</td><td>60</td><td>124</td><td style="color:var(--borgona)">+64</td><td>38</td><td>38</td><td>$321K</td></tr>
-        <tr><td>15</td><td>Leshlye Téllez</td><td>servicio</td><td>58</td><td>121</td><td style="color:var(--borgona)">+63</td><td>42</td><td>4</td><td>$172K</td></tr>
+        <tr><td>15</td><td>Leshlye T&eacute;llez</td><td>servicio</td><td>58</td><td>121</td><td style="color:var(--borgona)">+63</td><td>42</td><td>4</td><td>$172K</td></tr>
       </tbody>
     </table>
   </div>
@@ -355,7 +364,7 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
   <h2 class="section-title">Desglose de <span>Recargos</span></h2>
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1rem">
     <div class="chart-container">
-      <div class="chart-title">Composición de Horas Extras</div>
+      <div class="chart-title">Composici&oacute;n de Horas Extras</div>
       <div class="donut-container">
         <div style="position:relative">
           <svg viewBox="0 0 120 120" width="140" height="140">
@@ -377,7 +386,7 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
       </div>
     </div>
     <div class="chart-container">
-      <div class="chart-title">Composición de Recargos ($)</div>
+      <div class="chart-title">Composici&oacute;n de Recargos ($)</div>
       <div class="donut-container">
         <div style="position:relative">
           <svg viewBox="0 0 120 120" width="140" height="140">
@@ -398,10 +407,10 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
     </div>
   </div>
   <div class="chart-container">
-    <div class="chart-title">Recargos por Área (en pesos)</div>
+    <div class="chart-title">Recargos por &Aacute;rea (en pesos)</div>
     <div class="table-scroll" style="max-height:28vh">
       <table class="data-table">
-        <thead><tr><th>Área</th><th>RN</th><th>HDD</th><th>HDN</th><th>HED</th><th>HEN</th><th>Total</th></tr></thead>
+        <thead><tr><th>&Aacute;rea</th><th>RN</th><th>HDD</th><th>HDN</th><th>HED</th><th>HEN</th><th>Total</th></tr></thead>
         <tbody>
           <tr><td>Cocina</td><td>$3.4M</td><td>$0.7M</td><td>$0.3M</td><td>$0.2M</td><td>$0.1M</td><td style="font-weight:700">$4.7M</td></tr>
           <tr><td>Servicio</td><td>$3.7M</td><td>$0.9M</td><td>$0.4M</td><td>$0.1M</td><td>$0.0M</td><td style="font-weight:700">$5.1M</td></tr>
@@ -414,7 +423,7 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
   </div>
   <div style="display:grid;gap:.8rem;grid-template-columns:1fr 1fr;margin-top:.8rem">
     <div class="insight-card"><strong>RN domina los recargos:</strong> el 73% del costo de recargos viene de horas nocturnas regulares ($8.9M de $12.2M).</div>
-    <div class="insight-card danger"><strong>Dominicales por Área:</strong> Cocina y Servicio concentran el 74% de los recargos dominicales (HDD).</div>
+    <div class="insight-card danger"><strong>Dominicales por &Aacute;rea:</strong> Cocina y Servicio concentran el 74% de los recargos dominicales (HDD).</div>
   </div>
 </div>
 
@@ -424,9 +433,9 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
   <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:.7rem;margin-bottom:1rem">
     <div class="emp-card"><div><div class="emp-name">Javier Duque</div><div class="emp-area">apoyo</div></div><div class="emp-hours">208h<div class="emp-val">$763K</div></div></div>
     <div class="emp-card"><div><div class="emp-name">Bryan Sierra</div><div class="emp-area">servicio</div></div><div class="emp-hours">159h<div class="emp-val">$363K</div></div></div>
-    <div class="emp-card"><div><div class="emp-name">Brandon Mejía</div><div class="emp-area">barra</div></div><div class="emp-hours">123h<div class="emp-val">$216K</div></div></div>
+    <div class="emp-card"><div><div class="emp-name">Brandon Mej&iacute;a</div><div class="emp-area">barra</div></div><div class="emp-hours">123h<div class="emp-val">$216K</div></div></div>
     <div class="emp-card"><div><div class="emp-name">Edilberto Aguilar</div><div class="emp-area">apoyo</div></div><div class="emp-hours">121h<div class="emp-val">$71K</div></div></div>
-    <div class="emp-card"><div><div class="emp-name">Nathalia González</div><div class="emp-area">apoyo</div></div><div class="emp-hours">100h<div class="emp-val">$141K</div></div></div>
+    <div class="emp-card"><div><div class="emp-name">Nathalia Gonz&aacute;lez</div><div class="emp-area">apoyo</div></div><div class="emp-hours">100h<div class="emp-val">$141K</div></div></div>
     <div class="emp-card"><div><div class="emp-name">Lizeth Casallas</div><div class="emp-area">barra</div></div><div class="emp-hours">100h<div class="emp-val">$123K</div></div></div>
   </div>
   <div class="kpi-grid" style="margin-bottom:1rem">
@@ -452,58 +461,58 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
     </div>
   </div>
   <div style="display:grid;gap:.8rem;grid-template-columns:1fr 1fr;margin-top:.8rem">
-    <div class="insight-card danger"><strong>Apoyo 100% sin turno:</strong> las 430h del área de Apoyo no tienen programación asignada.</div>
-    <div class="insight-card"><strong>Acción recomendada:</strong> formalizar turnos para los 6 colaboradores sin asignación, eliminando al menos 812h de exceso no planificado.</div>
+    <div class="insight-card danger"><strong>Apoyo 100% sin turno:</strong> las 430h del &aacute;rea de Apoyo no tienen programaci&oacute;n asignada.</div>
+    <div class="insight-card"><strong>Acci&oacute;n recomendada:</strong> formalizar turnos para los 6 colaboradores sin asignaci&oacute;n, eliminando al menos 812h de exceso no planificado.</div>
   </div>
 </div>
 
 <!-- SLIDE 7: TABLA COMPLETA -->
 <div class="slide" id="s7">
   <h2 class="section-title">Tabla <span>Completa</span></h2>
-  <p class="subtitle">33 colaboradores · ordenados por exceso descendente</p>
+  <p class="subtitle">33 colaboradores &middot; ordenados por exceso descendente</p>
   <div class="table-scroll" id="fullTable" style="max-height:65vh">
     <table class="data-table">
-      <thead><tr><th>Nombre</th><th>Área</th><th>Prog</th><th>Real</th><th>Diff</th><th>HE</th><th>RN</th><th>Recargos</th></tr></thead>
+      <thead><tr><th>Nombre</th><th>&Aacute;rea</th><th>Prog</th><th>Real</th><th>Diff</th><th>HE</th><th>RN</th><th>Recargos</th></tr></thead>
       <tbody>
         <tr style="border-left:3px solid var(--borgona)"><td>Javier Duque</td><td>apoyo</td><td>0</td><td>208</td><td><span class="badge badge-danger">+208</span></td><td>41</td><td>57</td><td>$763K</td></tr>
         <tr style="border-left:3px solid var(--borgona)"><td>Omar Rico</td><td>cocina</td><td>63</td><td>218</td><td><span class="badge badge-danger">+155</span></td><td>78</td><td>70</td><td>$766K</td></tr>
-        <tr style="border-left:3px solid var(--borgona)"><td>Iván Larrahondo</td><td>cocina</td><td>42</td><td>178</td><td><span class="badge badge-danger">+136</span></td><td>46</td><td>44</td><td>$510K</td></tr>
-        <tr style="border-left:3px solid var(--borgona)"><td>Leonardo Suárez</td><td>servicio</td><td>120</td><td>239</td><td><span class="badge badge-danger">+120</span></td><td>81</td><td>64</td><td>$908K</td></tr>
+        <tr style="border-left:3px solid var(--borgona)"><td>Iv&aacute;n Larrahondo</td><td>cocina</td><td>42</td><td>178</td><td><span class="badge badge-danger">+136</span></td><td>46</td><td>44</td><td>$510K</td></tr>
+        <tr style="border-left:3px solid var(--borgona)"><td>Leonardo Su&aacute;rez</td><td>servicio</td><td>120</td><td>239</td><td><span class="badge badge-danger">+120</span></td><td>81</td><td>64</td><td>$908K</td></tr>
         <tr style="border-left:3px solid var(--borgona)"><td>Esneider Blanco</td><td>cocina</td><td>104</td><td>221</td><td><span class="badge badge-danger">+117</span></td><td>74</td><td>52</td><td>$940K</td></tr>
-        <tr style="border-left:3px solid var(--borgona)"><td>Verónica Medina</td><td>servicio</td><td>44</td><td>154</td><td><span class="badge badge-danger">+110</span></td><td>33</td><td>49</td><td>$681K</td></tr>
+        <tr style="border-left:3px solid var(--borgona)"><td>Ver&oacute;nica Medina</td><td>servicio</td><td>44</td><td>154</td><td><span class="badge badge-danger">+110</span></td><td>33</td><td>49</td><td>$681K</td></tr>
         <tr style="border-left:3px solid var(--borgona)"><td>Bryan Sierra</td><td>servicio</td><td>0</td><td>159</td><td><span class="badge badge-danger">+159</span></td><td>40</td><td>40</td><td>$363K</td></tr>
-        <tr style="border-left:3px solid var(--amber)"><td>Martín F. Orrego</td><td>servicio</td><td>70</td><td>166</td><td><span class="badge badge-warning">+96</span></td><td>55</td><td>43</td><td>$484K</td></tr>
+        <tr style="border-left:3px solid var(--amber)"><td>Mart&iacute;n F. Orrego</td><td>servicio</td><td>70</td><td>166</td><td><span class="badge badge-warning">+96</span></td><td>55</td><td>43</td><td>$484K</td></tr>
         <tr style="border-left:3px solid var(--amber)"><td>David Cubillos</td><td>servicio</td><td>69</td><td>163</td><td><span class="badge badge-warning">+94</span></td><td>54</td><td>55</td><td>$432K</td></tr>
         <tr style="border-left:3px solid var(--amber)"><td>Oscar Moreno</td><td>servicio</td><td>79</td><td>171</td><td><span class="badge badge-warning">+92</span></td><td>51</td><td>51</td><td>$435K</td></tr>
         <tr style="border-left:3px solid var(--amber)"><td>Giovanny Pompeyo</td><td>servicio</td><td>78</td><td>167</td><td><span class="badge badge-warning">+89</span></td><td>47</td><td>60</td><td>$477K</td></tr>
         <tr style="border-left:3px solid var(--amber)"><td>Yelson Ruiz</td><td>servicio</td><td>64</td><td>152</td><td><span class="badge badge-warning">+88</span></td><td>41</td><td>41</td><td>$421K</td></tr>
-        <tr style="border-left:3px solid var(--amber)"><td>Brandon Mejía</td><td>barra</td><td>0</td><td>123</td><td><span class="badge badge-danger">+123</span></td><td>14</td><td>35</td><td>$216K</td></tr>
         <tr style="border-left:3px solid var(--gold)"><td>Yohan Mora</td><td>barra</td><td>64</td><td>137</td><td><span class="badge badge-info">+73</span></td><td>46</td><td>43</td><td>$333K</td></tr>
-        <tr style="border-left:3px solid var(--gold)"><td>Manuel Noreña</td><td>barra</td><td>60</td><td>130</td><td><span class="badge badge-info">+70</span></td><td>37</td><td>45</td><td>$320K</td></tr>
-        <tr style="border-left:3px solid var(--gold)"><td>Angie Rodríguez</td><td>barra</td><td>69</td><td>134</td><td><span class="badge badge-info">+65</span></td><td>42</td><td>34</td><td>$279K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Manuel Nore&ntilde;a</td><td>barra</td><td>60</td><td>130</td><td><span class="badge badge-info">+70</span></td><td>37</td><td>45</td><td>$320K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Angie Rodr&iacute;guez</td><td>barra</td><td>69</td><td>134</td><td><span class="badge badge-info">+65</span></td><td>42</td><td>34</td><td>$279K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Brandon Mej&iacute;a</td><td>barra</td><td>0</td><td>123</td><td><span class="badge badge-danger">+123</span></td><td>14</td><td>35</td><td>$216K</td></tr>
         <tr style="border-left:3px solid var(--gold)"><td>Edilberto Aguilar</td><td>apoyo</td><td>0</td><td>121</td><td><span class="badge badge-danger">+121</span></td><td>8</td><td>4</td><td>$71K</td></tr>
-        <tr style="border-left:3px solid var(--gold)"><td>Nathalia González</td><td>apoyo</td><td>0</td><td>100</td><td><span class="badge badge-danger">+100</span></td><td>28</td><td>10</td><td>$141K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Nathalia Gonz&aacute;lez</td><td>apoyo</td><td>0</td><td>100</td><td><span class="badge badge-danger">+100</span></td><td>28</td><td>10</td><td>$141K</td></tr>
         <tr style="border-left:3px solid var(--gold)"><td>Lizeth Casallas</td><td>barra</td><td>0</td><td>100</td><td><span class="badge badge-danger">+100</span></td><td>17</td><td>19</td><td>$123K</td></tr>
         <tr style="border-left:3px solid var(--gold)"><td>Ronal Anzola</td><td>servicio</td><td>60</td><td>124</td><td><span class="badge badge-info">+64</span></td><td>38</td><td>38</td><td>$321K</td></tr>
-        <tr style="border-left:3px solid var(--gold)"><td>Leshlye Téllez</td><td>servicio</td><td>58</td><td>121</td><td><span class="badge badge-info">+63</span></td><td>42</td><td>4</td><td>$172K</td></tr>
-        <tr style="border-left:3px solid var(--gold)"><td>Ashlye Téllez</td><td>barra</td><td>41</td><td>70</td><td><span class="badge badge-info">+29</span></td><td>29</td><td>29</td><td>$175K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Leshlye T&eacute;llez</td><td>servicio</td><td>58</td><td>121</td><td><span class="badge badge-info">+63</span></td><td>42</td><td>4</td><td>$172K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Ashlye T&eacute;llez</td><td>barra</td><td>41</td><td>70</td><td><span class="badge badge-info">+29</span></td><td>29</td><td>29</td><td>$175K</td></tr>
         <tr style="border-left:3px solid var(--gold)"><td>Mauricio Laverde</td><td>cocina</td><td>110</td><td>169</td><td><span class="badge badge-info">+59</span></td><td>59</td><td>39</td><td>$479K</td></tr>
-        <tr style="border-left:3px solid var(--gold)"><td>Nicolás Alfaro</td><td>cocina</td><td>72</td><td>117</td><td><span class="badge badge-info">+46</span></td><td>33</td><td>33</td><td>$355K</td></tr>
-        <tr style="border-left:3px solid var(--gold)"><td>Martín E. Orrego</td><td>servicio</td><td>72</td><td>117</td><td><span class="badge badge-info">+45</span></td><td>28</td><td>27</td><td>$321K</td></tr>
-        <tr style="border-left:3px solid var(--gold)"><td>Juan P. Narváez</td><td>cocina</td><td>110</td><td>160</td><td><span class="badge badge-info">+50</span></td><td>50</td><td>51</td><td>$364K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Nicol&aacute;s Alfaro</td><td>cocina</td><td>72</td><td>117</td><td><span class="badge badge-info">+46</span></td><td>33</td><td>33</td><td>$355K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Mart&iacute;n E. Orrego</td><td>servicio</td><td>72</td><td>117</td><td><span class="badge badge-info">+45</span></td><td>28</td><td>27</td><td>$321K</td></tr>
+        <tr style="border-left:3px solid var(--gold)"><td>Juan P. Narv&aacute;ez</td><td>cocina</td><td>110</td><td>160</td><td><span class="badge badge-info">+50</span></td><td>50</td><td>51</td><td>$364K</td></tr>
         <tr style="border-left:3px solid var(--gold)"><td>Yohana Cruz</td><td>cocina</td><td>91</td><td>139</td><td><span class="badge badge-info">+48</span></td><td>48</td><td>36</td><td>$311K</td></tr>
         <tr style="border-left:3px solid var(--gold)"><td>Wendy Aldana</td><td>cocina</td><td>114</td><td>142</td><td><span class="badge badge-info">+28</span></td><td>28</td><td>30</td><td>$390K</td></tr>
         <tr style="border-left:3px solid var(--gold)"><td>Leidy Rozo</td><td>cocina</td><td>43</td><td>85</td><td><span class="badge badge-info">+42</span></td><td>42</td><td>0</td><td>$32K</td></tr>
         <tr style="border-left:3px solid var(--gold)"><td>Leanis Aular</td><td>servicio</td><td>13</td><td>23</td><td><span class="badge badge-info">+10</span></td><td>10</td><td>8</td><td>$45K</td></tr>
-        <tr style="border-left:3px solid var(--oliva)"><td>Carlos S. Suárez</td><td>cocina</td><td>100</td><td>93</td><td><span class="badge badge-success">-6</span></td><td>17</td><td>17</td><td>$267K</td></tr>
-        <tr style="border-left:3px solid var(--oliva)"><td>Clara González</td><td>cocina</td><td>112</td><td>102</td><td><span class="badge badge-success">-10</span></td><td>15</td><td>32</td><td>$283K</td></tr>
+        <tr style="border-left:3px solid var(--oliva)"><td>Carlos S. Su&aacute;rez</td><td>cocina</td><td>100</td><td>93</td><td><span class="badge badge-success">-6</span></td><td>17</td><td>17</td><td>$267K</td></tr>
+        <tr style="border-left:3px solid var(--oliva)"><td>Clara Gonz&aacute;lez</td><td>cocina</td><td>112</td><td>102</td><td><span class="badge badge-success">-10</span></td><td>15</td><td>32</td><td>$283K</td></tr>
         <tr style="border-left:3px solid var(--borgona)"><td>Ducibeth Ariola</td><td>cocina</td><td>44</td><td>0</td><td><span class="badge badge-danger">-44</span></td><td>0</td><td>0</td><td>$0</td></tr>
       </tbody>
     </table>
   </div>
   <div class="divider" style="margin-top:.8rem"></div>
   <div style="display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;font-size:.65rem;color:var(--night-muted)">
-    <span><span class="badge badge-danger" style="margin-right:2px">+100%</span> Exceso crítico</span>
+    <span><span class="badge badge-danger" style="margin-right:2px">+100%</span> Exceso cr&iacute;tico</span>
     <span><span class="badge badge-warning" style="margin-right:2px">50-99%</span> Exceso alto</span>
     <span><span class="badge badge-info" style="margin-right:2px">&lt;50%</span> Exceso moderado</span>
     <span><span class="badge badge-success" style="margin-right:2px">Negativo</span> Bajo lo programado</span>
@@ -512,133 +521,266 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
 
 <!-- NAVIGATION -->
 <div class="nav" id="nav"></div>
-<div class="slide-num" id="slideNum">1 / 7</div>
+<div class="slide-num" id="slideNum">1 / 8</div>
 
-<script>
-(function(){
-  const slides = document.querySelectorAll('.slide');
-  const nav = document.getElementById('nav');
-  const slideNum = document.getElementById('slideNum');
-  let current = 0;
-  const total = slides.length;
-
-  for(let i=0;i<total;i++){
-    const btn = document.createElement('button');
-    btn.setAttribute('aria-label','Slide '+(i+1));
-    if(i===0) btn.classList.add('active');
-    btn.addEventListener('click',()=>goTo(i));
-    nav.appendChild(btn);
+<!-- THREE.JS -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js",
+    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
   }
-  const dots = nav.querySelectorAll('button');
+}
+</script>
+<script type="module">
+import * as THREE from 'three';
 
-  function goTo(idx){
-    if(idx<0||idx>=total||idx===current) return;
-    slides[current].classList.remove('active');
-    slides[current].classList.add(idx>current?'exit-left':'');
-    const prev = current;
-    current = idx;
-    setTimeout(()=>{slides[prev].classList.remove('exit-left');},500);
-    slides[current].classList.add('active');
-    slides[current].scrollTop = 0;
-    updateDots();
-    animateSlide(current);
-  }
+// ─── BACKGROUND SCENE (floating particles behind all slides) ───
+const bgCanvas = document.getElementById('three-canvas');
+const bgRenderer = new THREE.WebGLRenderer({ canvas: bgCanvas, antialias: true, alpha: true });
+bgRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+bgRenderer.setSize(window.innerWidth, window.innerHeight);
 
-  function updateDots(){
-    dots.forEach((d,i)=>{d.classList.toggle('active',i===current);});
-    slideNum.textContent = (current+1)+' / '+total;
-  }
+const bgScene = new THREE.Scene();
+const bgCamera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 100);
+bgCamera.position.set(0, 0, 5);
 
-  document.addEventListener('keydown',e=>{
-    if(e.key==='ArrowRight'||e.key==='ArrowDown') goTo(current+1);
-    if(e.key==='ArrowLeft'||e.key==='ArrowUp') goTo(current-1);
-  });
+// Particles - dark amber/gold floating dots
+const PARTICLE_COUNT = 300;
+const particleGeo = new THREE.BufferGeometry();
+const positions = new Float32Array(PARTICLE_COUNT * 3);
+const velocities = new Float32Array(PARTICLE_COUNT * 3);
+const sizes = new Float32Array(PARTICLE_COUNT);
 
-  let touchStartX=0;
-  document.addEventListener('touchstart',e=>{touchStartX=e.changedTouches[0].screenX;},{passive:true});
-  document.addEventListener('touchend',e=>{
-    const diff = e.changedTouches[0].screenX - touchStartX;
-    if(Math.abs(diff)>50){
-      if(diff<0) goTo(current+1);
-      else goTo(current-1);
+for (let i = 0; i < PARTICLE_COUNT; i++) {
+  positions[i * 3] = (Math.random() - 0.5) * 20;
+  positions[i * 3 + 1] = (Math.random() - 0.5) * 20;
+  positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
+  velocities[i * 3] = (Math.random() - 0.5) * 0.002;
+  velocities[i * 3 + 1] = (Math.random() - 0.5) * 0.002;
+  velocities[i * 3 + 2] = (Math.random() - 0.5) * 0.001;
+  sizes[i] = Math.random() * 3 + 1;
+}
+
+particleGeo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+particleGeo.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
+
+const particleMat = new THREE.ShaderMaterial({
+  uniforms: {
+    uTime: { value: 0 },
+    uColor1: { value: new THREE.Color('#E48C04') },
+    uColor2: { value: new THREE.Color('#FCCC04') },
+  },
+  vertexShader: `
+    attribute float size;
+    uniform float uTime;
+    varying float vAlpha;
+    void main() {
+      vec3 pos = position;
+      pos.x += sin(uTime * 0.3 + position.y * 0.5) * 0.3;
+      pos.y += cos(uTime * 0.2 + position.x * 0.5) * 0.2;
+      vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
+      gl_PointSize = size * (300.0 / -mvPosition.z);
+      gl_Position = projectionMatrix * mvPosition;
+      vAlpha = 0.15 + 0.1 * sin(uTime + position.z * 2.0);
     }
-  },{passive:true});
+  `,
+  fragmentShader: `
+    uniform vec3 uColor1;
+    uniform vec3 uColor2;
+    varying float vAlpha;
+    void main() {
+      float d = length(gl_PointCoord - 0.5);
+      if (d > 0.5) discard;
+      float alpha = vAlpha * smoothstep(0.5, 0.1, d);
+      vec3 col = mix(uColor1, uColor2, gl_PointCoord.y);
+      gl_FragColor = vec4(col, alpha);
+    }
+  `,
+  transparent: true,
+  depthWrite: false,
+  blending: THREE.AdditiveBlending,
+});
 
-  function animateCounters(slide){
-    const nums = slide.querySelectorAll('[data-target]');
-    nums.forEach(el=>{
-      const target = parseInt(el.dataset.target);
-      const suffix = el.dataset.suffix || '';
-      const duration = 1200;
-      const start = performance.now();
-      function tick(now){
-        const progress = Math.min((now-start)/duration,1);
-        const eased = 1 - Math.pow(1 - progress, 3);
-        const val = Math.round(eased * target);
-        el.textContent = val.toLocaleString('es-CO') + suffix;
-        if(progress<1) requestAnimationFrame(tick);
-      }
-      requestAnimationFrame(tick);
-    });
+const particles = new THREE.Points(particleGeo, particleMat);
+bgScene.add(particles);
+
+// Ambient light lines
+const lineCount = 8;
+for (let i = 0; i < lineCount; i++) {
+  const lineGeo = new THREE.BufferGeometry();
+  const y = (i / lineCount - 0.5) * 12;
+  const pts = [new THREE.Vector3(-10, y, -3), new THREE.Vector3(10, y, -3)];
+  lineGeo.setFromPoints(pts);
+  const lineMat = new THREE.LineBasicMaterial({
+    color: new THREE.Color('#E48C04'),
+    transparent: true,
+    opacity: 0.03 + Math.random() * 0.04,
+  });
+  bgScene.add(new THREE.Line(lineGeo, lineMat));
+}
+
+// ─── ANIMATION ───
+const clock = new THREE.Clock();
+
+function animate() {
+  requestAnimationFrame(animate);
+  const t = clock.getElapsedTime();
+
+  // Background particles
+  particleMat.uniforms.uTime.value = t;
+  const posArr = particleGeo.attributes.position.array;
+  for (let i = 0; i < PARTICLE_COUNT; i++) {
+    posArr[i * 3] += velocities[i * 3];
+    posArr[i * 3 + 1] += velocities[i * 3 + 1];
+    posArr[i * 3 + 2] += velocities[i * 3 + 2];
+    // Wrap
+    if (posArr[i * 3] > 10) posArr[i * 3] = -10;
+    if (posArr[i * 3] < -10) posArr[i * 3] = 10;
+    if (posArr[i * 3 + 1] > 10) posArr[i * 3 + 1] = -10;
+    if (posArr[i * 3 + 1] < -10) posArr[i * 3 + 1] = 10;
   }
+  particleGeo.attributes.position.needsUpdate = true;
 
-  function animateBars(slide){
-    const bars = slide.querySelectorAll('.bar-fill[data-w]');
-    bars.forEach((bar,i)=>{
-      setTimeout(()=>{bar.style.width = bar.dataset.w;}, i*80);
-    });
+  bgRenderer.render(bgScene, bgCamera);
+}
+
+// Initial sizes
+bgRenderer.setSize(window.innerWidth, window.innerHeight);
+bgCamera.aspect = window.innerWidth / window.innerHeight;
+bgCamera.updateProjectionMatrix();
+
+window.addEventListener('resize', () => {
+  bgRenderer.setSize(window.innerWidth, window.innerHeight);
+  bgCamera.aspect = window.innerWidth / window.innerHeight;
+  bgCamera.updateProjectionMatrix();
+});
+
+animate();
+
+// ─── SLIDE NAVIGATION ───
+const slides = document.querySelectorAll('.slide');
+const nav = document.getElementById('nav');
+const slideNum = document.getElementById('slideNum');
+let current = 0;
+const total = slides.length;
+
+for(let i=0;i<total;i++){
+  const btn = document.createElement('button');
+  btn.setAttribute('aria-label','Slide '+(i+1));
+  if(i===0) btn.classList.add('active');
+  btn.addEventListener('click',()=>goTo(i));
+  nav.appendChild(btn);
+}
+const dots = nav.querySelectorAll('button');
+
+function goTo(idx){
+  if(idx<0||idx>=total||idx===current) return;
+  slides[current].classList.remove('active');
+  slides[current].classList.add(idx>current?'exit-left':'');
+  const prev = current;
+  current = idx;
+  setTimeout(()=>{slides[prev].classList.remove('exit-left');},500);
+  slides[current].classList.add('active');
+  slides[current].scrollTop = 0;
+  updateDots();
+  animateSlide(current);
+}
+
+function updateDots(){
+  dots.forEach((d,i)=>{d.classList.toggle('active',i===current);});
+  slideNum.textContent = (current+1)+' / '+total;
+}
+
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key==='ArrowDown') goTo(current+1);
+  if(e.key==='ArrowLeft'||e.key==='ArrowUp') goTo(current-1);
+});
+
+let touchStartX=0;
+document.addEventListener('touchstart',e=>{touchStartX=e.changedTouches[0].screenX;},{passive:true});
+document.addEventListener('touchend',e=>{
+  const diff = e.changedTouches[0].screenX - touchStartX;
+  if(Math.abs(diff)>50){
+    if(diff<0) goTo(current+1);
+    else goTo(current-1);
   }
+},{passive:true});
 
-  function buildRankingChart(){
-    const svg = document.getElementById('rankingChart');
-    if(!svg) return;
-    const data = [
-      {name:'Omar Rico',ho:63,he:78,rn:70,total:218},
-      {name:'Iván L.',ho:42,he:46,rn:44,total:178},
-      {name:'L. Suárez',ho:120,he:81,rn:64,total:239},
-      {name:'E. Blanco',ho:104,he:74,rn:52,total:221},
-      {name:'V. Medina',ho:44,he:33,rn:49,total:154},
-      {name:'M. Orrego',ho:70,he:55,rn:43,total:166},
-      {name:'D. Cubillos',ho:69,he:54,rn:55,total:163},
-      {name:'O. Moreno',ho:79,he:51,rn:51,total:171},
-      {name:'G. Pompeyo',ho:78,he:47,rn:60,total:167},
-      {name:'Y. Ruiz',ho:64,he:41,rn:41,total:152},
-      {name:'Y. Mora',ho:64,he:46,rn:43,total:137},
-      {name:'M. Noreña',ho:60,he:37,rn:45,total:130},
-      {name:'A. Rodríguez',ho:69,he:42,rn:34,total:134},
-      {name:'R. Anzola',ho:60,he:38,rn:38,total:124},
-      {name:'L. Téllez',ho:58,he:42,rn:4,total:121}
-    ];
-    const maxTotal = 239;
-    const barH = 16;
-    const gap = 4;
-    const leftMargin = 85;
-    const rightMargin = 45;
-    const chartW = 600 - leftMargin - rightMargin;
-    let html = '';
-    data.forEach((d,i) => {
-      const y = i * (barH + gap) + 5;
-      const hoW = (d.ho/maxTotal)*chartW;
-      const heW = (d.he/maxTotal)*chartW;
-      const rnW = (d.rn/maxTotal)*chartW;
-      html += '<text x="'+(leftMargin-5)+'" y="'+(y+barH/2+4)+'" text-anchor="end" fill="#9BA8B7" font-size="9" font-family="Inter,sans-serif">'+d.name+'</text>';
-      html += '<rect x="'+leftMargin+'" y="'+y+'" width="'+hoW+'" height="'+barH+'" rx="2" fill="#FCCC04"/>';
-      if(d.he>0) html += '<rect x="'+(leftMargin+hoW)+'" y="'+y+'" width="'+heW+'" height="'+barH+'" rx="2" fill="#5C7A4D"/>';
-      if(d.rn>0) html += '<rect x="'+(leftMargin+hoW+heW)+'" y="'+y+'" width="'+rnW+'" height="'+barH+'" rx="2" fill="#E48C04"/>';
-      html += '<text x="'+(leftMargin+hoW+heW+rnW+5)+'" y="'+(y+barH/2+4)+'" fill="#F4ECE4" font-size="9" font-family="Inter,sans-serif" font-weight="600">'+d.total+'h</text>';
-    });
-    svg.innerHTML = html;
-  }
+function animateCounters(slide){
+  const nums = slide.querySelectorAll('[data-target]');
+  nums.forEach(el=>{
+    const target = parseInt(el.dataset.target);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1200;
+    const start = performance.now();
+    function tick(now){
+      const progress = Math.min((now-start)/duration,1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const val = Math.round(eased * target);
+      el.textContent = val.toLocaleString('es-CO') + suffix;
+      if(progress<1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  });
+}
 
-  function animateSlide(idx){
-    const slide = slides[idx];
-    animateCounters(slide);
-    animateBars(slide);
-    if(idx===3) buildRankingChart();
-  }
+function animateBars(slide){
+  const bars = slide.querySelectorAll('.bar-fill[data-w]');
+  bars.forEach((bar,i)=>{
+    setTimeout(()=>{bar.style.width = bar.dataset.w;}, i*80);
+  });
+}
 
-  animateSlide(0);
-})();
+function buildRankingChart(){
+  const svg = document.getElementById('rankingChart');
+  if(!svg) return;
+  const data = [
+    {name:'Omar Rico',ho:63,he:78,rn:70,total:218},
+    {name:'Iván L.',ho:42,he:46,rn:44,total:178},
+    {name:'L. Suárez',ho:120,he:81,rn:64,total:239},
+    {name:'E. Blanco',ho:104,he:74,rn:52,total:221},
+    {name:'V. Medina',ho:44,he:33,rn:49,total:154},
+    {name:'M. Orrego',ho:70,he:55,rn:43,total:166},
+    {name:'D. Cubillos',ho:69,he:54,rn:55,total:163},
+    {name:'O. Moreno',ho:79,he:51,rn:51,total:171},
+    {name:'G. Pompeyo',ho:78,he:47,rn:60,total:167},
+    {name:'Y. Ruiz',ho:64,he:41,rn:41,total:152},
+    {name:'Y. Mora',ho:64,he:46,rn:43,total:137},
+    {name:'M. Noreña',ho:60,he:37,rn:45,total:130},
+    {name:'A. Rodríguez',ho:69,he:42,rn:34,total:134},
+    {name:'R. Anzola',ho:60,he:38,rn:38,total:124},
+    {name:'L. Téllez',ho:58,he:42,rn:4,total:121}
+  ];
+  const maxTotal = 239;
+  const barH = 16;
+  const gap = 4;
+  const leftMargin = 85;
+  const rightMargin = 45;
+  const chartW = 600 - leftMargin - rightMargin;
+  let html = '';
+  data.forEach((d,i) => {
+    const y = i * (barH + gap) + 5;
+    const hoW = (d.ho/maxTotal)*chartW;
+    const heW = (d.he/maxTotal)*chartW;
+    const rnW = (d.rn/maxTotal)*chartW;
+    html += '<text x="'+(leftMargin-5)+'" y="'+(y+barH/2+4)+'" text-anchor="end" fill="#9BA8B7" font-size="9" font-family="Inter,sans-serif">'+d.name+'</text>';
+    html += '<rect x="'+leftMargin+'" y="'+y+'" width="'+hoW+'" height="'+barH+'" rx="2" fill="#FCCC04"/>';
+    if(d.he>0) html += '<rect x="'+(leftMargin+hoW)+'" y="'+y+'" width="'+heW+'" height="'+barH+'" rx="2" fill="#5C7A4D"/>';
+    if(d.rn>0) html += '<rect x="'+(leftMargin+hoW+heW)+'" y="'+y+'" width="'+rnW+'" height="'+barH+'" rx="2" fill="#E48C04"/>';
+    html += '<text x="'+(leftMargin+hoW+heW+rnW+5)+'" y="'+(y+barH/2+4)+'" fill="#F4ECE4" font-size="9" font-family="Inter,sans-serif" font-weight="600">'+d.total+'h</text>';
+  });
+  svg.innerHTML = html;
+}
+
+function animateSlide(idx){
+  const slide = slides[idx];
+  animateCounters(slide);
+  animateBars(slide);
+  if(idx===3) buildRankingChart();
+}
+
+animateSlide(0);
 </script>
 </body>
 </html>
