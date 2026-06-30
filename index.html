@@ -58,7 +58,7 @@ h1,h2,h3{font-family:var(--font-heading);letter-spacing:.05em;text-transform:upp
 .nav button:hover{background:var(--amber)}
 .slide-num{position:fixed;top:1.2rem;right:1.5rem;font-size:.75rem;color:var(--night-muted);z-index:100;font-variant-numeric:tabular-nums;font-family:var(--font-body)}
 
-/* KPI Grid */
+/* ─── KPI GRID ─── */
 .kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem}
 .kpi-card{background:var(--night-card);border-radius:10px;padding:1.2rem 1rem;display:flex;flex-direction:column;gap:.25rem;position:relative;overflow:hidden;box-shadow:var(--shadow-card);border:var(--border-card);transition:transform .2s,box-shadow .2s;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);background:rgba(22,27,34,0.85)}
 .kpi-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-card-hover)}
@@ -74,7 +74,7 @@ h1,h2,h3{font-family:var(--font-heading);letter-spacing:.05em;text-transform:upp
 .kpi-sub.danger{color:var(--borgona)}
 .kpi-sub.success{color:var(--oliva-light)}
 
-/* Section titles */
+/* ─── SECTION TITLES ─── */
 .section-title{font-family:var(--font-heading);font-size:1.375rem;font-weight:700;color:var(--amber);letter-spacing:.05em;text-transform:uppercase;border-bottom:2px solid var(--rust);padding-bottom:8px;margin-bottom:1.2rem}
 .section-title span{color:var(--cream)}
 
@@ -87,17 +87,17 @@ h1,h2,h3{font-family:var(--font-heading);letter-spacing:.05em;text-transform:upp
 /* Ornament */
 .ornament{color:var(--amber);font-size:.625rem;letter-spacing:.3em;text-align:center;margin:.5rem 0}
 
-/* Insight cards */
+/* ─── INSIGHT CARDS ─── */
 .insight-card{background:rgba(30,39,51,0.85);border-left:3px solid var(--amber);border-radius:8px;padding:.8rem 1rem;font-size:.78rem;color:var(--night-muted);line-height:1.5;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .insight-card strong{color:var(--cream)}
 .insight-card.danger{border-left-color:var(--borgona)}
 .insight-card.success{border-left-color:var(--oliva)}
 
-/* Chart containers */
+/* ─── CHART CONTAINERS ─── */
 .chart-container{background:rgba(22,27,34,0.85);border:var(--border-card);border-radius:10px;padding:1.2rem;margin:1rem 0;box-shadow:var(--shadow-card);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .chart-title{font-family:var(--font-body);font-size:.625rem;text-transform:uppercase;letter-spacing:.1em;color:var(--night-muted);margin-bottom:.8rem;font-weight:600}
 
-/* Bar rows */
+/* ─── BAR ROWS ─── */
 .bar-row{display:flex;align-items:center;gap:.5rem;margin-bottom:.5rem}
 .bar-label{font-size:.7rem;color:var(--night-muted);width:70px;text-align:right;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bar-track{flex:1;height:22px;background:var(--night-input);border-radius:4px;position:relative;overflow:hidden}
@@ -107,20 +107,20 @@ h1,h2,h3{font-family:var(--font-heading);letter-spacing:.05em;text-transform:upp
 .bar-fill.borgona{background:var(--borgona)}
 .bar-val{font-size:.65rem;color:var(--night-muted);width:50px;text-align:left;flex-shrink:0;font-variant-numeric:tabular-nums}
 
-/* Data table */
+/* ─── DATA TABLE ─── */
 table.data-table{width:100%;border-collapse:collapse;font-size:.72rem;font-variant-numeric:tabular-nums}
 table.data-table th{text-align:left;padding:.4rem .5rem;color:var(--night-muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:.6rem;border-bottom:1px solid var(--night-border);position:sticky;top:0;background:rgba(30,39,51,0.95);z-index:1;backdrop-filter:blur(4px)}
 table.data-table td{padding:.35rem .5rem;border-bottom:1px solid rgba(45,55,72,.4);color:var(--cream)}
 table.data-table tr:hover td{background:rgba(228,140,4,.05)}
 
-/* Badges */
+/* ─── BADGES ─── */
 .badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:.6rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
 .badge-danger{background:rgba(178,77,66,.15);color:var(--borgona)}
 .badge-warning{background:rgba(228,140,4,.15);color:var(--amber-light)}
 .badge-info{background:rgba(252,204,4,.15);color:var(--gold)}
 .badge-success{background:rgba(92,122,77,.15);color:var(--oliva-light)}
 
-/* Area cards */
+/* ─── AREA CARDS ─── */
 .area-card{background:rgba(22,27,34,0.85);border:var(--border-card);border-radius:10px;padding:1rem;position:relative;overflow:hidden;box-shadow:var(--shadow-card);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 .area-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;border-radius:4px 0 0 4px}
 .area-card.cocina::before{background:var(--amber)}
@@ -132,20 +132,20 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
 .area-card .area-stats dt{color:var(--night-muted)}
 .area-card .area-stats dd{color:var(--cream);font-weight:600;font-variant-numeric:tabular-nums}
 
-/* Donut */
+/* ─── DONUT ─── */
 .donut-container{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;justify-content:center}
 .donut-legend{display:flex;flex-direction:column;gap:.35rem}
 .donut-legend-item{display:flex;align-items:center;gap:.4rem;font-size:.7rem;color:var(--night-muted)}
 .donut-legend-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
 
-/* Employee cards */
+/* ─── EMPLOYEE CARDS ─── */
 .emp-card{background:rgba(22,27,34,0.85);border:var(--border-card);border-radius:8px;padding:.7rem .9rem;display:grid;grid-template-columns:auto 1fr auto;gap:.4rem .6rem;align-items:center;font-size:.72rem;box-shadow:var(--shadow-card);backdrop-filter:blur(8px)}
 .emp-card .emp-name{font-weight:700;color:var(--cream)}
 .emp-card .emp-area{font-size:.65rem;color:var(--night-muted)}
 .emp-card .emp-hours{text-align:right;font-variant-numeric:tabular-nums}
 .emp-card .emp-val{color:var(--amber);font-weight:700}
 
-/* Hero */
+/* ─── HERO ─── */
 .logo-text{font-family:var(--font-heading);font-size:2.2rem;font-weight:900;letter-spacing:.12em;color:var(--gold);text-align:center;margin-bottom:.5rem;text-transform:uppercase}
 .logo-amp{font-family:var(--font-decorative);font-weight:400;font-size:1.6rem;color:var(--rust);vertical-align:middle;margin:0 .15em}
 .hero-title{font-family:var(--font-heading);font-size:1.8rem;font-weight:700;text-align:center;color:var(--cream);margin-bottom:.3rem;letter-spacing:.05em}
@@ -158,14 +158,13 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
 .hero-kpi .hero-sub-val.danger{color:var(--borgona)}
 .hero-footer{text-align:center;font-size:.65rem;color:var(--steel);margin-top:auto;padding-top:1.5rem;letter-spacing:.3em;text-transform:uppercase}
 
-/* Comparison grid */
+/* ─── COMPARISON GRID ─── */
 .comparison-grid{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin:1rem 0}
 .comp-card{background:rgba(22,27,34,0.85);border:var(--border-card);border-radius:10px;padding:1rem;box-shadow:var(--shadow-card);backdrop-filter:blur(8px)}
 .comp-card h4{font-family:var(--font-heading);font-size:.75rem;text-transform:uppercase;letter-spacing:.06em;color:var(--night-muted);margin-bottom:.6rem}
 .comp-card .comp-row{display:flex;justify-content:space-between;font-size:.72rem;padding:.2rem 0;border-bottom:1px solid rgba(45,55,72,.3)}
 .comp-card .comp-row:last-child{border-bottom:none}
 .comp-card .comp-val{font-weight:700;font-variant-numeric:tabular-nums}
-
 
 /* Table scroll */
 .table-scroll{overflow-y:auto;max-height:55vh;border-radius:10px;border:1px solid var(--night-border)}
@@ -175,7 +174,79 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
 .anim-in{animation:fadeSlideIn .6s var(--spring) both}
 @keyframes fadeSlideIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
-/* Responsive */
+/* ═══════════════════════════════════════════════
+   DESKTOP OPTIMIZATION — 900px+ wide screens
+   ═══════════════════════════════════════════════ */
+@media(min-width:900px){
+  .slide{padding:2.5rem 5% 4rem;max-width:1400px;margin:0 auto}
+  .logo-text{font-size:3.2rem;margin-bottom:.8rem}
+  .hero-title{font-size:2.4rem;margin-bottom:.5rem}
+  .hero-sub{font-size:1.1rem;margin-bottom:2.5rem}
+  .hero-kpis{grid-template-columns:repeat(4,1fr);max-width:900px;gap:1.5rem}
+  .hero-kpi{padding:1.5rem 1rem}
+  .hero-kpi .hero-num{font-size:3rem}
+  .hero-kpi .hero-label{font-size:.75rem}
+  .hero-kpi .hero-sub-val{font-size:.9rem}
+  .hero-footer{font-size:.8rem;padding-top:2rem}
+  .ornament{font-size:.8rem;margin:1rem 0}
+
+  .section-title{font-size:1.8rem;padding-bottom:12px;margin-bottom:1.5rem}
+  .subtitle{font-size:1.05rem;margin-bottom:2rem}
+  .kpi-grid{gap:1.5rem}
+  .kpi-card{padding:1.5rem 1.2rem}
+  .kpi-val{font-size:2rem}
+  .kpi-label{font-size:.75rem}
+  .kpi-sub{font-size:.8rem}
+
+  .area-cards-grid{grid-template-columns:repeat(4,1fr)!important;gap:1.2rem}
+  .area-card{padding:1.3rem}
+  .area-card h3{font-size:1rem}
+  .area-card .area-stats{font-size:.8rem;gap:.3rem .7rem}
+
+  .chart-container{padding:1.5rem}
+  .chart-title{font-size:.8rem;margin-bottom:1rem}
+
+  .bar-label{width:90px;font-size:.8rem}
+  .bar-track{height:28px}
+  .bar-val{font-size:.75rem;width:65px}
+
+  .insight-card{font-size:.9rem;padding:1rem 1.2rem}
+
+  .comparison-grid{gap:1.5rem}
+  .comp-card{padding:1.3rem}
+  .comp-card h4{font-size:.9rem}
+  .comp-card .comp-row{font-size:.85rem;padding:.3rem 0}
+
+  .emp-card{padding:.9rem 1.1rem;font-size:.82rem}
+  .emp-card .emp-area{font-size:.72rem}
+
+  .donut-container{gap:2rem}
+
+  .data-table{font-size:.82rem}
+  .data-table th{font-size:.72rem;padding:.5rem .7rem}
+  .data-table td{padding:.45rem .7rem}
+
+  .table-scroll{max-height:70vh}
+
+  .nav{bottom:2rem;padding:.6rem 1.5rem;gap:.8rem}
+  .nav button{width:12px;height:12px}
+  .slide-num{font-size:.85rem;top:2rem;right:3rem}
+}
+
+/* ═══════════════════════════════════════════════
+   WIDE DESKTOP — 1200px+ ultra-wide screens
+   ═══════════════════════════════════════════════ */
+@media(min-width:1200px){
+  .slide{padding:3rem 8% 4rem}
+  .hero-kpis{max-width:1100px;gap:2rem}
+  .hero-kpi .hero-num{font-size:3.5rem}
+  .area-cards-grid{grid-template-columns:repeat(4,1fr)!important}
+  .kpi-grid{grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+}
+
+/* ═══════════════════════════════════════════════
+   MOBILE — under 480px
+   ═══════════════════════════════════════════════ */
 @media(max-width:480px){
   .slide{padding:1.2rem 1rem 4.5rem}
   .logo-text{font-size:1.5rem}
@@ -186,21 +257,17 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
   .kpi-val{font-size:1.3rem}
   .section-title{font-size:1.1rem}
   .bar-label{width:50px;font-size:.6rem}
-  .area-cards-grid{grid-template-columns:1fr}
+  .area-cards-grid{grid-template-columns:1fr!important}
   .comparison-grid{grid-template-columns:1fr}
   .donut-container{flex-direction:column}
   .emp-card{grid-template-columns:auto 1fr;font-size:.65rem}
-  
 }
 @media(max-width:375px){
   .slide{padding:1rem .8rem 4rem}
   .kpi-grid{grid-template-columns:1fr}
   .hero-kpis{grid-template-columns:1fr 1fr}
 }
-@media(min-width:769px){
-  .hero-kpis{grid-template-columns:repeat(4,1fr);max-width:700px}
-  .area-cards-grid{grid-template-columns:repeat(2,1fr)}
-}
+
 @media print{
   .nav,.slide-num{display:none!important}
   .slide{position:static;opacity:1;transform:none;pointer-events:auto;page-break-after:always;box-shadow:none}
@@ -249,43 +316,45 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
 <!-- SLIDE 2: RESUMEN EJECUTIVO -->
 <div class="slide" id="s2">
   <h2 class="section-title">Resumen <span>Ejecutivo</span></h2>
-  <div class="kpi-grid" style="margin-bottom:1.2rem">
-    <div class="kpi-card gold"><div class="kpi-label">Costo Fijo Mensual</div><div class="kpi-val">$154.2M</div></div>
+  <div class="kpi-grid" style="margin-bottom:1.5rem">
+    <div class="kpi-card gold"><div class="kpi-label">Costo Fijo Mensual</div><div class="kpi-val" style="color:var(--gold)">$154.2M</div></div>
     <div class="kpi-card amber"><div class="kpi-label">Recargos</div><div class="kpi-val">$12.2M</div></div>
-    <div class="kpi-card rust"><div class="kpi-label">Costo Total</div><div class="kpi-val">$166.3M</div></div>
-    <div class="kpi-card borgona"><div class="kpi-label">% Recargos</div><div class="kpi-val">7.9%</div></div>
+    <div class="kpi-card amber"><div class="kpi-label">Costo Total</div><div class="kpi-val" style="color:var(--cream)">$166.3M</div></div>
+    <div class="kpi-card borgona"><div class="kpi-label">% Recargos sobre Fijo</div><div class="kpi-val" style="color:var(--borgona)">7.9%</div></div>
   </div>
   <div class="chart-container">
-    <div class="chart-title">Desglose de Horas Fichadas por Tipo</div>
-    <div class="bar-row"><span class="bar-label">HO</span><div class="bar-track"><div class="bar-fill" style="width:0;background:var(--gold)" data-w="52.7%"></div></div><span class="bar-val">2,373h</span></div>
-    <div class="bar-row"><span class="bar-label">RN</span><div class="bar-track"><div class="bar-fill" style="width:0;background:var(--gradient-bar)" data-w="27.5%"></div></div><span class="bar-val">1,238h</span></div>
-    <div class="bar-row"><span class="bar-label">HDD</span><div class="bar-track"><div class="bar-fill" style="width:0;background:var(--borgona)" data-w="7.2%"></div></div><span class="bar-val">325h</span></div>
-    <div class="bar-row"><span class="bar-label">HEN</span><div class="bar-track"><div class="bar-fill" style="width:0;background:var(--rust)" data-w="7.3%"></div></div><span class="bar-val">330h</span></div>
-    <div class="bar-row"><span class="bar-label">HDN</span><div class="bar-track"><div class="bar-fill" style="width:0;background:var(--steel)" data-w="3.2%"></div></div><span class="bar-val">142h</span></div>
-    <div class="bar-row"><span class="bar-label">HED</span><div class="bar-track"><div class="bar-fill" style="width:0;background:var(--oliva)" data-w="2.2%"></div></div><span class="bar-val">97h</span></div>
+    <div class="chart-title">Desglose de horas fichadas por tipo</div>
+    <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:.5rem;text-align:center;font-size:.75rem">
+      <div style="padding:.6rem;background:rgba(228,140,4,.08);border-radius:6px"><div style="font-family:var(--font-display);font-size:1.4rem;font-weight:900;color:var(--amber)">2,373h</div><div style="color:var(--night-muted);font-size:.65rem;text-transform:uppercase;letter-spacing:.05em;margin-top:.2rem">HO</div></div>
+      <div style="padding:.6rem;background:rgba(252,204,4,.08);border-radius:6px"><div style="font-family:var(--font-display);font-size:1.4rem;font-weight:900;color:var(--gold)">1,238h</div><div style="color:var(--night-muted);font-size:.65rem;text-transform:uppercase;letter-spacing:.05em;margin-top:.2rem">RN</div></div>
+      <div style="padding:.6rem;background:rgba(178,77,66,.08);border-radius:6px"><div style="font-family:var(--font-display);font-size:1.4rem;font-weight:900;color:var(--borgona)">325h</div><div style="color:var(--night-muted);font-size:.65rem;text-transform:uppercase;letter-spacing:.05em;margin-top:.2rem">HDD</div></div>
+      <div style="padding:.6rem;background:rgba(252,204,4,.08);border-radius:6px"><div style="font-family:var(--font-display);font-size:1.4rem;font-weight:900;color:var(--gold)">330h</div><div style="color:var(--night-muted);font-size:.65rem;text-transform:uppercase;letter-spacing:.05em;margin-top:.2rem">HEN</div></div>
+      <div style="padding:.6rem;background:rgba(60,76,92,.15);border-radius:6px"><div style="font-family:var(--font-display);font-size:1.4rem;font-weight:900;color:var(--steel)">142h</div><div style="color:var(--night-muted);font-size:.65rem;text-transform:uppercase;letter-spacing:.05em;margin-top:.2rem">HDN</div></div>
+      <div style="padding:.6rem;background:rgba(60,76,92,.15);border-radius:6px"><div style="font-family:var(--font-display);font-size:1.4rem;font-weight:900;color:var(--steel)">97h</div><div style="color:var(--night-muted);font-size:.65rem;text-transform:uppercase;letter-spacing:.05em;margin-top:.2rem">HED</div></div>
+    </div>
   </div>
-  <div style="display:grid;gap:.8rem;grid-template-columns:1fr 1fr">
+  <div style="display:grid;gap:.8rem;grid-template-columns:1fr 1fr;margin-top:1rem">
     <div class="insight-card"><strong>Horas Ordinarias</strong> representan el 53% del total fichado (2,373 de 4,505h). El resto son horas adicionales.</div>
-    <div class="insight-card danger"><strong>Recargos nocturnos</strong> (RN) son el componente m&aacute;s grande con 1,238h, equivalente a $7.0M en valor.</div>
+    <div class="insight-card"><strong>Recargos nocturnos</strong> (RN) son el componente m&aacute;s grande con 1,238h, equivalente a $7.0M en valor.</div>
   </div>
 </div>
 
-<!-- SLIDE 3: POR AREA -->
+<!-- SLIDE 3: DESGLOSE POR ÁREA -->
 <div class="slide" id="s3">
   <h2 class="section-title">Desglose por <span>&Aacute;rea</span></h2>
-  <div class="area-cards-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1rem">
+  <div class="area-cards-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:1.5rem">
     <div class="area-card cocina">
-      <h3>Cocina</h3>
+      <h3 style="color:var(--amber)">Cocina</h3>
       <dl class="area-stats">
         <dt>Programadas</dt><dd>1,004h</dd>
         <dt>Fichadas</dt><dd style="color:var(--amber)">1,624h</dd>
-        <dt>Exceso</dt><dd style="color:var(--borgona)">+619h (+62%)</dd>
+        <dt>Exceso</dt><dd style="color:var(--borgona)">+620h (+62%)</dd>
         <dt>HE</dt><dd>391h</dd>
         <dt>Recargos</dt><dd style="color:var(--amber)">$4.7M</dd>
       </dl>
     </div>
     <div class="area-card servicio">
-      <h3>Servicio</h3>
+      <h3 style="color:var(--gold)">Servicio</h3>
       <dl class="area-stats">
         <dt>Programadas</dt><dd>726h</dd>
         <dt>Fichadas</dt><dd style="color:var(--amber)">1,757h</dd>
@@ -295,7 +364,7 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
       </dl>
     </div>
     <div class="area-card barra">
-      <h3>Barra</h3>
+      <h3 style="color:var(--oliva)">Barra</h3>
       <dl class="area-stats">
         <dt>Programadas</dt><dd>234h</dd>
         <dt>Fichadas</dt><dd style="color:var(--amber)">694h</dd>
@@ -305,7 +374,7 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
       </dl>
     </div>
     <div class="area-card apoyo">
-      <h3>Apoyo</h3>
+      <h3 style="color:var(--rust)">Apoyo</h3>
       <dl class="area-stats">
         <dt>Programadas</dt><dd>0h</dd>
         <dt>Fichadas</dt><dd style="color:var(--amber)">430h</dd>
