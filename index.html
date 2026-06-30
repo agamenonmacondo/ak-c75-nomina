@@ -535,8 +535,69 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
   </div>
 </div>
 
-<!-- SLIDE 7: TABLA COMPLETA -->
+<!-- SLIDE 7: SEGMENTO HORARIO CRÍTICO -->
 <div class="slide" id="s7">
+  <h2 class="section-title">D&oacute;nde se Generan las <span>Horas Extras</span></h2>
+  <p class="subtitle">Segmento horario con mayor exceso: CENA &rarr; NOCHE (18:00&ndash;02:00)</p>
+
+  <div class="kpi-grid" style="margin-bottom:1rem">
+    <div class="kpi-card borgona"><div class="kpi-label">Segmento Cr&iacute;tico</div><div class="kpi-val" style="color:var(--borgona);font-size:1.3rem">CENA 18-22</div><div class="kpi-sub danger">55% del exceso</div></div>
+    <div class="kpi-card amber"><div class="kpi-label">Costo Nocturno</div><div class="kpi-val" style="color:var(--amber)">87%</div><div class="kpi-sub">de recargos (+75%)</div></div>
+    <div class="kpi-card gold"><div class="kpi-label">Pico Ventas</div><div class="kpi-val">19:00</div><div class="kpi-sub">253 transacciones</div></div>
+    <div class="kpi-card rust"><div class="kpi-label">Ahorro Potencial</div><div class="kpi-val" style="color:var(--rust)">$33.8M</div><div class="kpi-sub danger">/mes si se optimiza</div></div>
+  </div>
+
+  <div class="chart-container" style="margin-bottom:.8rem">
+    <div class="chart-title">Horas Programadas vs Fichadas por Segmento</div>
+    <div style="display:grid;grid-template-columns:1fr;gap:.4rem">
+      <div class="bar-row"><span class="bar-label">00-06</span><div class="bar-track"><div class="bar-fill prog" style="width:0" data-w="0.3%"></div><div class="bar-fill real" style="width:0" data-w="2%"></div></div><span class="bar-val" style="font-size:.6rem;color:var(--night-muted)">Madrugada · +75%</span></div>
+      <div class="bar-row"><span class="bar-label">06-12</span><div class="bar-track"><div class="bar-fill prog" style="width:0" data-w="13%"></div><div class="bar-fill real" style="width:0" data-w="18%"></div></div><span class="bar-val" style="font-size:.6rem;color:var(--night-muted)">Mañana · +25%</span></div>
+      <div class="bar-row"><span class="bar-label">12-15</span><div class="bar-track"><div class="bar-fill prog" style="width:0" data-w="15%"></div><div class="bar-fill real" style="width:0" data-w="20%"></div></div><span class="bar-val" style="font-size:.6rem;color:var(--night-muted)">Almuerzo · +25%</span></div>
+      <div class="bar-row"><span class="bar-label">15-18</span><div class="bar-track"><div class="bar-fill prog" style="width:0" data-w="25%"></div><div class="bar-fill real" style="width:0" data-w="30%"></div></div><span class="bar-val" style="font-size:.6rem;color:var(--night-muted)">Tarde · +25%</span></div>
+      <div class="bar-row"><span class="bar-label" style="color:var(--borgona);font-weight:700">18-22</span><div class="bar-track" style="border:1px solid var(--borgona)"><div class="bar-fill prog" style="width:0" data-w="39%"></div><div class="bar-fill borgona" style="width:0" data-w="55%"></div></div><span class="bar-val" style="color:var(--borgona);font-weight:700">CENA · +25%</span></div>
+      <div class="bar-row"><span class="bar-label" style="color:var(--borgona);font-weight:700">22-02</span><div class="bar-track" style="border:1px solid var(--borgona)"><div class="bar-fill prog" style="width:0" data-w="7%"></div><div class="bar-fill borgona" style="width:0" data-w="18%"></div></div><span class="bar-val" style="color:var(--borgona);font-weight:700">Noche · +75%</span></div>
+    </div>
+    <div style="display:flex;gap:1.2rem;justify-content:center;margin-top:.6rem;font-size:.65rem;color:var(--night-muted)">
+      <span><span style="display:inline-block;width:12px;height:8px;background:var(--steel);opacity:.6;border-radius:2px;vertical-align:middle;margin-right:3px"></span>Programadas</span>
+      <span><span style="display:inline-block;width:12px;height:8px;background:var(--gradient-bar);border-radius:2px;vertical-align:middle;margin-right:3px"></span>Fichadas</span>
+      <span><span style="display:inline-block;width:12px;height:8px;background:var(--borgona);border-radius:2px;vertical-align:middle;margin-right:3px"></span>Segmento cr&iacute;tico</span>
+    </div>
+  </div>
+
+  <div style="display:grid;gap:.8rem;grid-template-columns:1fr 1fr;margin-bottom:.8rem">
+    <div class="chart-container">
+      <div class="chart-title">Turnos que M&aacute;s HE Generan</div>
+      <div style="font-size:.72rem;display:flex;flex-direction:column;gap:.35rem">
+        <div style="display:flex;justify-content:space-between;padding:.3rem .5rem;background:rgba(178,77,66,.1);border-left:3px solid var(--borgona);border-radius:0 4px 4px 0"><span style="font-weight:700;color:var(--borgona)">C (Cierre Cocina 16-23)</span><span style="color:var(--amber)">705h · cruza 2h nocturnas</span></div>
+        <div style="display:flex;justify-content:space-between;padding:.3rem .5rem;background:rgba(228,140,4,.08);border-left:3px solid var(--amber);border-radius:0 4px 4px 0"><span style="font-weight:700">P2 (Partido 10-22:30)</span><span>214h · 8.5h + 0.5h extra</span></div>
+        <div style="display:flex;justify-content:space-between;padding:.3rem .5rem;background:rgba(228,140,4,.08);border-left:3px solid var(--amber);border-radius:0 4px 4px 0"><span style="font-weight:700">CD (Cierre Domestic@ 14-22:30)</span><span>162h · 8.5h + 1.5h nocturnas</span></div>
+        <div style="display:flex;justify-content:space-between;padding:.3rem .5rem;background:rgba(228,140,4,.08);border-left:3px solid var(--amber);border-radius:0 4px 4px 0"><span style="font-weight:700">S (Seguido 10-22:30)</span><span>153h · 8.5h + 2h nocturnas</span></div>
+        <div style="display:flex;justify-content:space-between;padding:.3rem .5rem;background:rgba(178,77,66,.15);border-left:3px solid var(--borgona);border-radius:0 4px 4px 0"><span style="font-weight:700;color:var(--borgona)">B5 (12h) &amp; APT (12h)</span><span style="color:var(--borgona)">ILEGALES · 4h extras/d&iacute;a</span></div>
+      </div>
+    </div>
+    <div class="chart-container">
+      <div class="chart-title">Costo de Recargos por Segmento</div>
+      <div style="font-size:.72rem;display:flex;flex-direction:column;gap:.3rem">
+        <div style="display:flex;justify-content:space-between;padding:.4rem .6rem;background:rgba(178,77,66,.12);border-radius:6px"><span style="font-weight:700;color:var(--borgona)">Nocturno (21-06) +75%</span><span style="color:var(--borgona);font-weight:900;font-size:.85rem">$38.1M</span></div>
+        <div style="display:flex;justify-content:space-between;padding:.4rem .6rem;background:rgba(228,140,4,.08);border-radius:6px"><span style="font-weight:700;color:var(--amber)">HE Diurnas (06-21) +25%</span><span style="color:var(--amber);font-weight:900;font-size:.85rem">$5.6M</span></div>
+        <div style="padding:.4rem .6rem;border-top:1px solid var(--night-border);display:flex;justify-content:space-between"><span style="font-weight:700;color:var(--cream)">Total Recargos</span><span style="color:var(--gold);font-weight:900;font-size:.9rem">$43.8M</span></div>
+      </div>
+      <div class="divider" style="margin:.5rem 0"></div>
+      <div style="font-size:.7rem;color:var(--night-muted);line-height:1.5">
+        <strong style="color:var(--borgona)">87% del costo</strong> est&aacute; en horas nocturnas (21-06).<br>
+        Cada hora despu&eacute;s de las 9pm cuesta <strong style="color:var(--amber)">1.75&times;</strong> la tarifa normal.
+      </div>
+    </div>
+  </div>
+
+  <div style="display:grid;gap:.8rem;grid-template-columns:1fr 1fr">
+    <div class="insight-card danger"><strong>El cruce de las 21:00 es el hoyo negro:</strong> el pico de ventas (253 txns a las 19:00) impide salidas puntuales. Cuando el personal se queda despu&eacute;s de las 21:00, cada hora cuesta +75% de recargo nocturno.</div>
+    <div class="insight-card success"><strong>Ahorro potencial $33.8M/mes</strong> reduciendo 50% del exceso en CENA: redise&ntilde;ar B5/APT a 8h ($7.5M), asignar turnos a los 6 sin turno ($8.5M), l&iacute;mite duro 10h/d&iacute;a + salidas antes de 21:00 ($13.3M).</div>
+  </div>
+</div>
+
+<!-- SLIDE 8: TABLA COMPLETA -->
+<div class="slide" id="s8">
   <h2 class="section-title">Tabla <span>Completa</span></h2>
   <p class="subtitle">33 colaboradores &middot; ordenados por exceso descendente</p>
   <div class="table-scroll" id="fullTable" style="max-height:65vh">
@@ -590,7 +651,7 @@ table.data-table tr:hover td{background:rgba(228,140,4,.05)}
 
 <!-- NAVIGATION -->
 <div class="nav" id="nav"></div>
-<div class="slide-num" id="slideNum">1 / 7</div>
+<div class="slide-num" id="slideNum">1 / 8</div>
 
 <!-- THREE.JS -->
 <script type="importmap">
